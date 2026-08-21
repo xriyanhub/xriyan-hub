@@ -67,8 +67,8 @@
         </div>
 
         <div class="form-group">
-            <label for="whatsapp">আপনার হোয়াটসঅ্যাপ নম্বর:</label>
-            <input type="text" id="whatsapp" placeholder="Ex: 01700000000">
+            <label for="payment-info">পেমেন্ট নম্বর ও TrxID (বিকাশ/নগদ):</label>
+            <input type="text" id="payment-info" placeholder="Ex: 017... / TrxID: AB123456">
         </div>
 
         <button class="btn-submit" id="submit-btn" onclick="sendOrder()">BUY NOW (অর্ডার করুন)</button>
@@ -78,7 +78,6 @@
         let selectedPackage = "";
         let selectedPrice = "";
 
-        // Telegram Bot Credentials
         const TELEGRAM_BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E";
         const TELEGRAM_CHAT_ID = "7623733350";
 
@@ -91,7 +90,7 @@
 
         function sendOrder() {
             const playerId = document.getElementById('player-id').value.trim();
-            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const paymentInfo = document.getElementById('payment-info').value.trim();
 
             if (!selectedPackage) {
                 alert("দয়া করে একটি প্যাকেজ সিলেক্ট করুন!");
@@ -101,8 +100,8 @@
                 alert("দয়া করে আপনার Player ID দিন!");
                 return;
             }
-            if (!whatsapp) {
-                alert("দয়া করে হোয়াটসঅ্যাপ নম্বর দিন!");
+            if (!paymentInfo) {
+                alert("দয়া করে পেমেন্ট নম্বর ও TrxID দিন!");
                 return;
             }
 
@@ -115,7 +114,7 @@
                 `💎 *Package:* ${selectedPackage}%0A` +
                 `💰 *Price:* ${selectedPrice}%0A` +
                 `🆔 *Player ID:* \`${playerId}\`%0A` +
-                `📞 *WhatsApp:* \`${whatsapp}\``;
+                `💳 *Payment:* \`${paymentInfo}\``;
 
             const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${message}&parse_mode=Markdown`;
 
@@ -125,7 +124,7 @@
                     if (data.ok) {
                         alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
                         document.getElementById('player-id').value = '';
-                        document.getElementById('whatsapp').value = '';
+                        document.getElementById('payment-info').value = '';
                         document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
                         selectedPackage = "";
                         selectedPrice = "";
