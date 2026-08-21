@@ -3,356 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XRIYAN HUB</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-
+    <title>Free Fire Top Up - XRIYAN HUB</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
-        body { background-color: #0f172a; color: #ffffff; padding-bottom: 30px; }
-
-        header { background: #1e293b; padding: 15px 20px; text-align: center; border-bottom: 2px solid #38bdf8; position: sticky; top: 0; z-index: 100; }
-        header h1 { font-size: 22px; color: #38bdf8; letter-spacing: 1px; }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0f172a; color: #ffffff; padding-bottom: 50px; }
+        header { background: #1e293b; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #38bdf8; }
+        .back-btn { color: #38bdf8; text-decoration: none; font-weight: bold; }
         .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-
-        .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .game-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; display: block; transition: 0.2s; }
-        .game-card:hover { border-color: #38bdf8; transform: translateY(-3px); }
-        .game-icon { font-size: 38px; color: #38bdf8; margin-bottom: 8px; }
-        .game-card h3 { font-size: 16px; color: #fff; font-weight: 700; }
-
-        .modal-toggle { display: none; }
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.95);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
-
-        .modal-toggle:checked + .modal-overlay { display: flex; }
-
-        .modal-content {
-            background: #1e293b;
-            width: 100%;
-            max-width: 480px;
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid #38bdf8;
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .close-btn { position: absolute; top: 12px; right: 15px; font-size: 24px; color: #94a3b8; cursor: pointer; font-weight: bold; }
-        .sec-title { color: #38bdf8; font-size: 16px; margin: 15px 0 10px 0; font-weight: bold; }
-
-        .pkg-radio, .pay-radio { display: none; }
-
-        .pkg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .pkg-card-item {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 10px;
-            padding: 12px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: 0.2s;
-            display: block;
-        }
-        .pkg-card-item h4 { font-size: 15px; color: #fff; margin-bottom: 4px; font-weight: 700; }
-        .pkg-card-item p { font-size: 14px; color: #38bdf8; font-weight: bold; }
-
-        .pkg-radio:checked + .pkg-card-item {
-            border-color: #38bdf8;
-            background: #002b49;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
-        }
-
-        .pay-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 10px; }
-        .pay-card-item {
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            color: #fff;
-            display: block;
-        }
-
-        .bkash-radio:checked + .pay-card-item { background: #881337; border-color: #e91e63; }
-        .nagad-radio:checked + .pay-card-item { background: #7c2d12; border-color: #f97316; }
-
-        .pay-details-bkash, .pay-details-nagad { display: none; }
-        .bkash-radio:checked ~ .pay-details-bkash { display: block; }
-        .nagad-radio:checked ~ .pay-details-nagad { display: block; }
-
-        .num-box { background: #0f172a; border: 1px dashed #38bdf8; border-radius: 8px; padding: 12px; margin: 10px 0; }
-        .num-box p { font-size: 13px; color: #eab308; margin-bottom: 8px; font-weight: bold; }
+        .banner { width: 100%; height: 120px; background: linear-gradient(135deg, #ff416c, #ff4b2b); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; }
+        .section-title { font-size: 16px; margin-bottom: 12px; color: #38bdf8; }
         
-        .num-item { 
-            background: #1e293b; 
-            padding: 8px 12px; 
-            border-radius: 6px; 
-            margin-bottom: 6px; 
-            font-size: 15px; 
-            font-weight: bold; 
-            letter-spacing: 1px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
+        .card { background: #1e293b; border: 2px solid #334155; border-radius: 10px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .card:hover, .card.active { border-color: #38bdf8; background: #0f2942; }
+        .card h4 { font-size: 15px; margin-bottom: 5px; color: #fff; }
+        .card p { font-size: 14px; color: #38bdf8; font-weight: bold; }
 
-        .btn-copy {
-            background: #38bdf8;
-            color: #0f172a;
-            border: none;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .form-label { display: block; font-size: 14px; color: #cbd5e1; margin: 12px 0 5px 0; }
-        .form-input { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; outline: none; }
-        .form-input:focus { border-color: #38bdf8; }
-
-        .btn-submit { width: 100%; padding: 14px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; color: #cbd5e1; }
+        .form-group input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; font-size: 15px; outline: none; }
+        
+        .btn-submit { width: 100%; padding: 14px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .btn-submit:disabled { background: #64748b; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>XRIYAN HUB</h1>
+        <a href="index.html" class="back-btn">← Home</a>
+        <h1>Free Fire Top Up</h1>
+        <div></div>
     </header>
 
     <div class="container">
-        <h3 style="margin-bottom:15px; color:#cbd5e1; font-size: 16px;">Select Game to Topup</h3>
-        
-        <div class="game-grid">
-            <label for="game-1" class="game-card">
-                <div class="game-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
-                <h3>Free Fire</h3>
-            </label>
+        <div class="banner">🔥 FREE FIRE 🔥</div>
 
-            <label for="game-2" class="game-card">
-                <div class="game-icon"><i class="fa-solid fa-crosshairs"></i></div>
-                <h3>PUBG Mobile</h3>
-            </label>
-
-            <label for="game-3" class="game-card"><div class="game-icon"><i class="fa-solid fa-shield-halved"></i></div><h3>Mobile Legends</h3></label>
-            <label for="game-4" class="game-card"><div class="game-icon"><i class="fa-solid fa-star"></i></div><h3>Brawl Stars</h3></label>
-            <label for="game-5" class="game-card"><div class="game-icon"><i class="fa-solid fa-chess-knight"></i></div><h3>Clash of Clans</h3></label>
-            <label for="game-6" class="game-card"><div class="game-icon"><i class="fa-solid fa-football"></i></div><h3>FC Mobile</h3></label>
-            <label for="game-7" class="game-card"><div class="game-icon"><i class="fa-solid fa-gun"></i></div><h3>Call of Duty</h3></label>
-            <label for="game-8" class="game-card"><div class="game-icon"><i class="fa-solid fa-bullseye"></i></div><h3>Counter Strike 2</h3></label>
-            <label for="game-9" class="game-card"><div class="game-icon"><i class="fa-solid fa-futbol"></i></div><h3>eFootball</h3></label>
-            <label for="game-10" class="game-card"><div class="game-icon"><i class="fa-solid fa-car-burst"></i></div><h3>GTA V Online</h3></label>
-            <label for="game-11" class="game-card"><div class="game-icon"><i class="fa-solid fa-crown"></i></div><h3>Honor of Kings</h3></label>
-            <label for="game-12" class="game-card"><div class="game-icon"><i class="fa-solid fa-gem"></i></div><h3>League of Legends</h3></label>
-            <label for="game-13" class="game-card"><div class="game-icon"><i class="fa-solid fa-v"></i></div><h3>Valorant PC</h3></label>
+        <h3 class="section-title">১. প্যাকেজ নির্বাচন করুন</h3>
+        <div class="grid">
+            <div class="card" onclick="selectPackage(this, '115 Diamonds', '80 BDT')">
+                <h4>115 Diamonds</h4><p>80 BDT</p>
+            </div>
+            <div class="card" onclick="selectPackage(this, '240 Diamonds', '160 BDT')">
+                <h4>240 Diamonds</h4><p>160 BDT</p>
+            </div>
+            <div class="card" onclick="selectPackage(this, '610 Diamonds', '420 BDT')">
+                <h4>610 Diamonds</h4><p>420 BDT</p>
+            </div>
+            <div class="card" onclick="selectPackage(this, 'Weekly Membership', '165 BDT')">
+                <h4>Weekly Membership</h4><p>165 BDT</p>
+            </div>
+            <div class="card" onclick="selectPackage(this, 'Monthly Membership', '750 BDT')">
+                <h4>Monthly Membership</h4><p>750 BDT</p>
+            </div>
+            <div class="card" onclick="selectPackage(this, 'Level Up Pass', '190 BDT')">
+                <h4>Level Up Pass</h4><p>190 BDT</p>
+            </div>
         </div>
-    </div>
 
-    <!-- FREE FIRE MODAL (1) -->
-    <input type="checkbox" id="game-1" class="modal-toggle">
-    <div class="modal-overlay">
-        <div class="modal-content">
-            <label for="game-1" class="close-btn">&times;</label>
-            <h3 style="color:#38bdf8; font-size:20px; margin-bottom:10px;">Free Fire Topup</h3>
-            
-            <form onsubmit="sendTelegramOrder(event, 'Free Fire', 'ff_pkg', 'ff_uid', 'ff_pay', 'ff_trx', 'game-1')">
-                <h4 class="sec-title">১. প্যাকেজ নির্বাচন করুন</h4>
-                <div class="pkg-grid">
-                    <input type="radio" id="g1-p1" name="ff_pkg" value="175 Diamonds - 100 BDT" class="pkg-radio" required>
-                    <label for="g1-p1" class="pkg-card-item"><h4>175 Diamonds</h4><p>100 BDT</p></label>
-
-                    <input type="radio" id="g1-p2" name="ff_pkg" value="240 Diamonds - 160 BDT" class="pkg-radio">
-                    <label for="g1-p2" class="pkg-card-item"><h4>240 Diamonds</h4><p>160 BDT</p></label>
-
-                    <input type="radio" id="g1-p3" name="ff_pkg" value="610 Diamonds - 420 BDT" class="pkg-radio">
-                    <label for="g1-p3" class="pkg-card-item"><h4>610 Diamonds</h4><p>420 BDT</p></label>
-
-                    <input type="radio" id="g1-p4" name="ff_pkg" value="Weekly Pass - 165 BDT" class="pkg-radio">
-                    <label for="g1-p4" class="pkg-card-item"><h4>Weekly Pass</h4><p>165 BDT</p></label>
-                </div>
-
-                <h4 class="sec-title">২. প্লেয়ার তথ্য দিন</h4>
-                <label class="form-label">Player ID (UID):</label>
-                <input type="text" id="ff_uid" class="form-input" placeholder="Ex: 123456789" required>
-
-                <h4 class="sec-title">৩. পেমেন্ট পদ্ধতি</h4>
-                <input type="radio" id="g1-bkash" name="ff_pay" value="bKash" class="pay-radio bkash-radio" required>
-                <input type="radio" id="g1-nagad" name="ff_pay" value="Nagad" class="pay-radio nagad-radio">
-
-                <div class="pay-grid">
-                    <label for="g1-bkash" class="pay-card-item">bKash</label>
-                    <label for="g1-nagad" class="pay-card-item">Nagad</label>
-                </div>
-
-                <div class="pay-details-bkash num-box">
-                    <p>bKash Personal Send Money:</p>
-                    <div class="num-item">
-                        <span>01602543660</span>
-                        <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button>
-                    </div>
-                    <div class="num-item">
-                        <span>01727127735</span>
-                        <button type="button" class="btn-copy" onclick="copyText('01727127735', this)"><i class="fa-regular fa-copy"></i> Copy</button>
-                    </div>
-                </div>
-                <div class="pay-details-nagad num-box">
-                    <p>Nagad Personal Send Money:</p>
-                    <div class="num-item">
-                        <span>01804334909</span>
-                        <button type="button" class="btn-copy" onclick="copyText('01804334909', this)"><i class="fa-regular fa-copy"></i> Copy</button>
-                    </div>
-                    <div class="num-item">
-                        <span>01602543660</span>
-                        <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button>
-                    </div>
-                </div>
-
-                <label class="form-label">পেমেন্ট নম্বর ও TrxID:</label>
-                <input type="text" id="ff_trx" class="form-input" placeholder="Ex: 017... / TrxID" required>
-                <button type="submit" class="btn-submit">BUY NOW (অর্ডার করুন)</button>
-            </form>
+        <h3 class="section-title">২. প্লেয়ার তথ্য দিন</h3>
+        <div class="form-group">
+            <label for="player-id">Player ID (UID):</label>
+            <input type="number" id="player-id" placeholder="Ex: 123456789">
         </div>
-    </div>
 
-    <!-- PUBG MOBILE MODAL (2) -->
-    <input type="checkbox" id="game-2" class="modal-toggle">
-    <div class="modal-overlay">
-        <div class="modal-content">
-            <label for="game-2" class="close-btn">&times;</label>
-            <h3 style="color:#38bdf8; font-size:20px; margin-bottom:10px;">PUBG Mobile Topup</h3>
-            <form onsubmit="sendTelegramOrder(event, 'PUBG Mobile', 'pubg_pkg', 'pubg_uid', 'pubg_pay', 'pubg_trx', 'game-2')">
-                <h4 class="sec-title">১. প্যাকেজ নির্বাচন করুন</h4>
-                <div class="pkg-grid">
-                    <input type="radio" id="g2-p1" name="pubg_pkg" value="60 UC - 95 BDT" class="pkg-radio" required>
-                    <label for="g2-p1" class="pkg-card-item"><h4>60 UC</h4><p>95 BDT</p></label>
-
-                    <input type="radio" id="g2-p2" name="pubg_pkg" value="325 UC - 440 BDT" class="pkg-radio">
-                    <label for="g2-p2" class="pkg-card-item"><h4>325 UC</h4><p>440 BDT</p></label>
-                </div>
-
-                <h4 class="sec-title">২. প্লেয়ার তথ্য দিন</h4>
-                <label class="form-label">Character ID (UID):</label>
-                <input type="text" id="pubg_uid" class="form-input" placeholder="Ex: 512345678" required>
-
-                <h4 class="sec-title">৩. পেমেন্ট পদ্ধতি</h4>
-                <input type="radio" id="g2-bkash" name="pubg_pay" value="bKash" class="pay-radio bkash-radio" required>
-                <input type="radio" id="g2-nagad" name="pubg_pay" value="Nagad" class="pay-radio nagad-radio">
-
-                <div class="pay-grid">
-                    <label for="g2-bkash" class="pay-card-item">bKash</label>
-                    <label for="g2-nagad" class="pay-card-item">Nagad</label>
-                </div>
-
-                <div class="pay-details-bkash num-box">
-                    <p>bKash Personal Send Money:</p>
-                    <div class="num-item">
-                        <span>01602543660</span>
-                        <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button>
-                    </div>
-                </div>
-                <div class="pay-details-nagad num-box">
-                    <p>Nagad Personal Send Money:</p>
-                    <div class="num-item">
-                        <span>01804334909</span>
-                        <button type="button" class="btn-copy" onclick="copyText('01804334909', this)"><i class="fa-regular fa-copy"></i> Copy</button>
-                    </div>
-                </div>
-
-                <label class="form-label">পেমেন্ট নম্বর ও TrxID:</label>
-                <input type="text" id="pubg_trx" class="form-input" placeholder="Ex: 017... / TrxID" required>
-                <button type="submit" class="btn-submit">BUY NOW (অর্ডার করুন)</button>
-            </form>
+        <div class="form-group">
+            <label for="payment-info">পেমেন্ট নম্বর ও TrxID (বিকাশ/নগদ):</label>
+            <input type="text" id="payment-info" placeholder="Ex: 017... / TrxID: AB123456">
         </div>
-    </div>
 
-    <!-- OTHER MODALS -->
-    <input type="checkbox" id="game-3" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-3" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Mobile Legends</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-4" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-4" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Brawl Stars</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-5" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-5" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Clash of Clans</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-6" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-6" class="close-btn">&times;</label><h3 style="color:#38bdf8;">FC Mobile</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-7" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-7" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Call of Duty</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-8" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-8" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Counter Strike 2</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-9" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-9" class="close-btn">&times;</label><h3 style="color:#38bdf8;">eFootball</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-10" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-10" class="close-btn">&times;</label><h3 style="color:#38bdf8;">GTA V Online</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-11" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-11" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Honor of Kings</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-12" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-12" class="close-btn">&times;</label><h3 style="color:#38bdf8;">League of Legends</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-13" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-13" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Valorant PC</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
+        <button class="btn-submit" id="submit-btn" onclick="sendOrder()">BUY NOW (অর্ডার করুন)</button>
+    </div>
 
     <script>
-        // Copy Number Script
-        function copyText(num, btn) {
-            navigator.clipboard.writeText(num).then(() => {
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                btn.style.background = '#22c55e';
-                btn.style.color = '#fff';
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
-                    btn.style.background = '#38bdf8';
-                    btn.style.color = '#0f172a';
-                }, 2000);
-            });
+        let selectedPackage = "";
+        let selectedPrice = "";
+
+        const TELEGRAM_BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E";
+        const TELEGRAM_CHAT_ID = "7623733350";
+
+        function selectPackage(element, pack, price) {
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            element.classList.add('active');
+            selectedPackage = pack;
+            selectedPrice = price;
         }
 
-        // TELEGRAM BOT CONFIGURATION
-        const BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E"; 
-        const CHAT_ID = "8580912664";     
+        function sendOrder() {
+            const playerId = document.getElementById('player-id').value.trim();
+            const paymentInfo = document.getElementById('payment-info').value.trim();
 
-        // Send Order to Telegram Bot
-        function sendTelegramOrder(e, gameName, pkgName, uidId, payName, trxId, modalId) {
-            e.preventDefault();
+            if (!selectedPackage) {
+                alert("দয়া করে একটি প্যাকেজ সিলেক্ট করুন!");
+                return;
+            }
+            if (!playerId) {
+                alert("দয়া করে আপনার Player ID দিন!");
+                return;
+            }
+            if (!paymentInfo) {
+                alert("দয়া করে পেমেন্ট নম্বর ও TrxID দিন!");
+                return;
+            }
 
-            let btn = e.target.querySelector('button[type="submit"]');
-            btn.innerText = "Processing...";
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "অর্ডার প্রসেস হচ্ছে...";
             btn.disabled = true;
 
-            let pkg = document.querySelector(`input[name="${pkgName}"]:checked`).value;
-            let uid = document.getElementById(uidId).value;
-            let payMethod = document.querySelector(`input[name="${payName}"]:checked`).value;
-            let trx = document.getElementById(trxId).value;
+            const message = `🛒 *New Order Received!*%0A%0A` +
+                `🎮 *Game:* Free Fire%0A` +
+                `💎 *Package:* ${selectedPackage}%0A` +
+                `💰 *Price:* ${selectedPrice}%0A` +
+                `🆔 *Player ID:* \`${playerId}\`%0A` +
+                `💳 *Payment:* \`${paymentInfo}\``;
 
-            let textMessage = `🛒 *NEW TOPUP ORDER*%0A%0A` +
-                              `🎮 *Game:* ${gameName}%0A` +
-                              `💎 *Package:* ${pkg}%0A` +
-                              `🆔 *Player ID:* ${uid}%0A` +
-                              `💳 *Payment Method:* ${payMethod}%0A` +
-                              `📝 *TrxID/Number:* ${trx}`;
-
-            let url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${textMessage}&parse_mode=Markdown`;
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${message}&parse_mode=Markdown`;
 
             fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert("✅ আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
-                    document.getElementById(modalId).checked = false; 
-                    e.target.reset(); 
-                } else {
-                    alert("❌ অর্ডার পাঠাতে সমস্যা হয়েছে! দয়া করে আবার চেষ্টা করুন।");
-                }
-            })
-            .catch(error => {
-                alert("❌ নেটওয়ার্ক এরর! দয়া করে আবার চেষ্টা করুন।");
-            })
-            .finally(() => {
-                btn.innerText = "BUY NOW (অর্ডার করুন)";
-                btn.disabled = false;
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
+                        document.getElementById('player-id').value = '';
+                        document.getElementById('payment-info').value = '';
+                        document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+                        selectedPackage = "";
+                        selectedPrice = "";
+                    } else {
+                        alert("অর্ডার পাঠাতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
+                    }
+                })
+                .catch(err => {
+                    alert("নেটওয়ার্ক সমস্যা! আবার চেষ্টা করুন।");
+                })
+                .finally(() => {
+                    btn.innerText = "BUY NOW (অর্ডার করুন)";
+                    btn.disabled = false;
+                });
         }
     </script>
+
 </body>
 </html>
