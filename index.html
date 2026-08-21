@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XRIYAN HUB - Gaming Store & Profile VIP</title>
     
+    <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+    <!-- FontAwesome Icons & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
 
@@ -28,16 +30,16 @@
         /* Game Grid (Topup) */
         .section-title { font-size: 16px; margin-bottom: 12px; color: #cbd5e1; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
         .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .game-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; text-decoration: none; color: white; transition: 0.2s; text-align: center; padding-bottom: 12px; }
+        .game-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; overflow: hidden; text-decoration: none; color: white; transition: 0.2s; text-align: center; padding: 12px; cursor: pointer; }
         .game-card:hover { border-color: #38bdf8; transform: translateY(-3px); }
-        .game-card img { width: 100%; height: 110px; object-fit: cover; }
-        .game-card h3 { font-size: 14px; margin-top: 10px; color: #f8fafc; }
+        .game-card img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 8px; border-radius: 10px; }
+        .game-card h3 { font-size: 14px; color: #f8fafc; }
 
         /* Tournament Section UI */
-        .tourney-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
+        .tourney-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; margin-bottom: 12px; position: relative; }
         .tourney-card h3 { color: #38bdf8; font-size: 16px; margin-bottom: 5px; }
         .tourney-info { font-size: 13px; color: #94a3b8; margin-bottom: 10px; display: flex; justify-content: space-between; }
-        .btn-join { display: block; width: 100%; padding: 10px; background: #38bdf8; color: #0f172a; font-weight: bold; text-align: center; border-radius: 6px; text-decoration: none; }
+        .badge-upcoming { background: #eab308; color: #000; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; display: inline-block; }
 
         /* Sub-navigation inside Leaderboard */
         .sub-nav { display: flex; background: #1e293b; border-radius: 8px; margin-bottom: 15px; padding: 4px; border: 1px solid #334155; }
@@ -46,32 +48,19 @@
 
         /* Leaderboard UI */
         .leaderboard-list { background: #1e293b; border-radius: 12px; padding: 10px; border: 1px solid #334155; }
-        .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-bottom: 1px solid #334155; transition: background 0.3s; }
+        .rank-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-bottom: 1px solid #334155; }
         .rank-item:last-child { border-bottom: none; }
-        .rank-item.user-highlight { background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; border-radius: 8px; margin-bottom: 8px; }
         .rank-number { font-weight: bold; width: 35px; color: #facc15; font-size: 15px; }
         .rank-info { flex-grow: 1; display: flex; align-items: center; gap: 8px; }
         .rank-name { font-size: 14px; font-weight: 600; color: #fff; }
-        .badge-vip { background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-vip { background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: bold; }
         .rank-score { font-size: 13px; color: #38bdf8; font-weight: bold; }
 
-        /* Profile Card Modal View */
-        .profile-card-modal { background: #1e293b; border-radius: 16px; padding: 20px; border: 1px solid #38bdf8; text-align: center; position: relative; margin-bottom: 20px; }
-        .profile-pp { width: 85px; height: 85px; border-radius: 50%; border: 3px solid #38bdf8; margin: 0 auto 10px auto; object-fit: cover; }
+        /* Profile Modal View */
+        .profile-card-modal { background: #1e293b; border-radius: 16px; padding: 20px; border: 1px solid #38bdf8; text-align: center; margin-bottom: 15px; }
+        .profile-pp { width: 80px; height: 80px; border-radius: 50%; border: 3px solid #38bdf8; margin: 0 auto 10px auto; }
         .profile-name { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 4px; }
-        .profile-vip-tag { display: inline-block; background: linear-gradient(135deg, #eab308, #ca8a04); color: #000; font-weight: 900; padding: 3px 12px; border-radius: 12px; font-size: 12px; margin-bottom: 15px; }
-        .vip-progress-bg { background: #0f172a; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 8px; border: 1px solid #334155; }
-        .vip-progress-fill { background: linear-gradient(90deg, #38bdf8, #facc15); height: 100%; width: 0%; transition: width 0.5s; }
-        .vip-progress-text { font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between; }
-
-        /* Glowing Owner Footer Banner */
-        .owner-banner { text-align: center; margin: 25px 0 10px 0; padding: 12px; background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; }
-        .owner-text { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 900; letter-spacing: 2.5px; color: #38bdf8; text-transform: uppercase; animation: glowingEffect 1.5s infinite alternate; }
-        @keyframes glowingEffect {
-            0% { color: #38bdf8; text-shadow: 0 0 5px #38bdf8, 0 0 10px #38bdf8; }
-            50% { color: #facc15; text-shadow: 0 0 5px #facc15, 0 0 15px #facc15; }
-            100% { color: #ef4444; text-shadow: 0 0 8px #ef4444, 0 0 18px #ef4444; }
-        }
+        .user-balance-badge { background: #22c55e; color: #000; font-weight: bold; padding: 4px 12px; border-radius: 20px; font-size: 13px; display: inline-block; margin-bottom: 10px; }
 
         /* Bottom Navigation Bar */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #1e293b; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #334155; max-width: 600px; margin: 0 auto; z-index: 1000; }
@@ -79,103 +68,90 @@
         .nav-item i { font-size: 18px; display: block; margin-bottom: 3px; }
         .nav-item.active { color: #38bdf8; font-weight: bold; }
 
-        /* Auth Modal Styling */
+        /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(5px); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #1e293b; width: 100%; max-width: 400px; padding: 25px; border-radius: 16px; border: 1px solid #334155; position: relative; }
+        .modal-content { background: #1e293b; width: 100%; max-width: 400px; padding: 20px; border-radius: 16px; border: 1px solid #334155; position: relative; }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 20px; color: #94a3b8; cursor: pointer; }
-        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #334155; }
-        .auth-tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: #94a3b8; font-weight: bold; }
+        .auth-tabs { display: flex; margin-bottom: 15px; border-bottom: 1px solid #334155; }
+        .auth-tab { flex: 1; text-align: center; padding: 8px; cursor: pointer; color: #94a3b8; font-weight: bold; }
         .auth-tab.active { color: #38bdf8; border-bottom: 2px solid #38bdf8; }
         .auth-form { display: none; }
         .auth-form.active { display: block; }
-        .form-input { width: 100%; padding: 12px; margin-bottom: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; outline: none; }
-        .btn-auth-submit { width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .google-btn { width: 100%; padding: 10px; background: #fff; color: #333; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; }
+        .form-input { width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; outline: none; }
+        .btn-auth-submit { width: 100%; padding: 10px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 5px; }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <h1>XRIYAN HUB</h1>
-        <button class="auth-btn-head" id="user-display-btn" onclick="openProfileOrAuth()">
-            <i class="fa-solid fa-user"></i> <span id="btn-user-text">Login / Account</span>
+        <button class="auth-btn-head" onclick="openProfileOrAuth()">
+            <i class="fa-solid fa-user"></i> <span id="btn-user-text">Login</span>
         </button>
     </header>
 
     <div class="container">
 
+        <!-- 1. TOPUP TAB -->
         <div id="topup-tab" class="tab-content active">
             <div class="section-title">
                 <span>Select Game to Topup</span>
             </div>
             <div class="game-grid">
-                <a href="free-fire.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400" alt="Free Fire">
+                <div class="game-card" onclick="handleGameOrder('Free Fire')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Free_Fire_Logo.png" alt="Free Fire">
                     <h3>Free Fire</h3>
-                </a>
-                <a href="pubg-mobile.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=400" alt="PUBG Mobile">
+                </div>
+                <div class="game-card" onclick="handleGameOrder('PUBG Mobile')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/PUBG_Mobile_Logo.svg/1200px-PUBG_Mobile_Logo.svg.png" alt="PUBG">
                     <h3>PUBG Mobile</h3>
-                </a>
-                <a href="mobile-legends.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400" alt="Mobile Legends">
+                </div>
+                <div class="game-card" onclick="handleGameOrder('Mobile Legends')">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Mobile_Legends_Bang_Bang_logo.png/250px-Mobile_Legends_Bang_Bang_logo.png" alt="MLBB">
                     <h3>Mobile Legends</h3>
-                </a>
-                <a href="brawl-stars.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=400" alt="Brawl Stars">
+                </div>
+                <div class="game-card" onclick="handleGameOrder('Brawl Stars')">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/2/29/Brawl_Stars_logo.png" alt="Brawl Stars">
                     <h3>Brawl Stars</h3>
-                </a>
-                <a href="clash-of-clans.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=400" alt="Clash of Clans">
+                </div>
+                <div class="game-card" onclick="handleGameOrder('Clash of Clans')">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/0/03/Clash_of_Clans_logo.png" alt="COC">
                     <h3>Clash of Clans</h3>
-                </a>
-                <a href="ea-sports-fc-mobile.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=400" alt="FC Mobile">
+                </div>
+                <div class="game-card" onclick="handleGameOrder('FC Mobile')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/EA_Sports_FC_Mobile_logo.png/640px-EA_Sports_FC_Mobile_logo.png" alt="FC Mobile">
                     <h3>FC Mobile</h3>
-                </a>
-                <a href="efootball-mobile.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=400" alt="eFootball">
-                    <h3>eFootball Mobile</h3>
-                </a>
-                <a href="gta-v-online.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=400" alt="GTA V">
-                    <h3>GTA V Online</h3>
-                </a>
-                <a href="league-of-legends.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1542751110-97427bbecf20?w=400" alt="LoL">
-                    <h3>League of Legends</h3>
-                </a>
-                <a href="valorant-pc.html" class="game-card">
-                    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400" alt="Valorant">
-                    <h3>Valorant (PC)</h3>
-                </a>
+                </div>
             </div>
         </div>
 
+        <!-- 2. TOURNAMENT TAB -->
         <div id="tournament-tab" class="tab-content">
-            <h3 class="section-title">Active Tournaments</h3>
+            <h3 class="section-title">Tournaments</h3>
             <div class="tourney-card">
-                <h3>🔥 Free Fire Daily Solo Cup</h3>
+                <h3>🔥 Free Fire Solo Cup</h3>
                 <div class="tourney-info">
                     <span>Entry: 20 BDT</span>
                     <span>Prize: 300 BDT</span>
                 </div>
-                <a href="https://t.me/" target="_blank" class="btn-join">Join Match</a>
+                <span class="badge-upcoming">Upcoming</span>
             </div>
             <div class="tourney-card">
-                <h3>💥 PUBG Mobile Squad Battle</h3>
+                <h3>💥 PUBG Mobile Squad Match</h3>
                 <div class="tourney-info">
                     <span>Entry: 50 BDT</span>
                     <span>Prize: 800 BDT</span>
                 </div>
-                <a href="https://t.me/" target="_blank" class="btn-join">Join Match</a>
+                <span class="badge-upcoming">Upcoming</span>
             </div>
         </div>
 
+        <!-- 3. LEADERBOARD TAB -->
         <div id="leaderboard-tab" class="tab-content">
             <div class="sub-nav">
-                <div class="sub-tab active" onclick="switchSubTab('sub-topup', this)">Topup Leaderboard</div>
-                <div class="sub-tab" onclick="switchSubTab('sub-tournament', this)">Tournament Leaderboard</div>
+                <div class="sub-tab active" onclick="switchSubTab('sub-topup', this)">Topup Ranking</div>
+                <div class="sub-tab" onclick="switchSubTab('sub-tournament', this)">Tournament Ranking</div>
             </div>
 
             <div id="sub-topup" class="sub-content">
@@ -186,19 +162,16 @@
                 <div class="leaderboard-list">
                     <div class="rank-item">
                         <span class="rank-number">🥇 1</span>
-                        <div class="rank-info"><span class="rank-name">Team Elite BD</span><span class="badge-vip">CHAMPION</span></div>
+                        <div class="rank-info"><span class="rank-name">Team Elite BD</span></div>
                         <span class="rank-score">2,500 Pts</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="owner-banner">
-            <span class="owner-text">⚡ OWNER: XRIYAN BD ⚡</span>
-        </div>
-
     </div>
 
+    <!-- Bottom Navigation Bar -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="switchTab('topup-tab', this)">
             <i class="fa-solid fa-gem"></i> Topup
@@ -211,56 +184,41 @@
         </div>
     </div>
 
+    <!-- Profile View Modal -->
     <div class="modal" id="profileModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeProfileModal()">&times;</span>
             <div class="profile-card-modal">
-                <img id="user-pp-img" class="profile-pp" src="" alt="Avatar">
+                <img id="user-pp-img" class="profile-pp" src="https://api.dicebear.com/7.x/bottts/svg?seed=Xriyan" alt="Avatar">
                 <div class="profile-name" id="user-profile-name">User Name</div>
-                <div class="profile-vip-tag" id="user-vip-level">VIP LEVEL 0</div>
-                
-                <div class="vip-progress-bg">
-                    <div class="vip-progress-fill" id="vip-bar-fill"></div>
-                </div>
-                <div class="vip-progress-text">
-                    <span id="spent-amount-txt">Spent: 0 BDT</span>
-                    <span id="next-vip-txt">Next Level: 10,000 BDT</span>
-                </div>
+                <div class="user-balance-badge" id="user-balance-display">Balance: 0 BDT</div>
             </div>
+            <button class="btn-auth-submit" style="background:#22c55e; color:#000; margin-bottom: 8px;" onclick="alert('Add Money সিস্টেম শীঘ্রই চালু হচ্ছে!')">ADD MONEY</button>
             <button class="btn-auth-submit" style="background:#ef4444; color:#fff;" onclick="handleLogout()">LOGOUT</button>
         </div>
     </div>
 
+    <!-- Auth Modal -->
     <div class="modal" id="authModal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeAuthModal()">&times;</span>
             
             <div class="auth-tabs">
-                <div class="auth-tab active" onclick="switchAuthForm('signup-form', this)">Create Account</div>
-                <div class="auth-tab" onclick="switchAuthForm('login-form', this)">Login</div>
+                <div class="auth-tab active" onclick="switchAuthForm('login-form', this)">Login</div>
+                <div class="auth-tab" onclick="switchAuthForm('signup-form', this)">Register</div>
             </div>
 
-            <div id="signup-form" class="auth-form active">
-                <button class="google-btn" onclick="googleAuthSimulate()">
-                    <i class="fa-brands fa-google" style="color:#ea4335;"></i> Continue with Gmail
-                </button>
-                <div style="text-align: center; font-size: 11px; color: #64748b; margin-bottom: 12px;">- OR WITH PHONE/PASSWORD -</div>
-                
-                <input type="text" id="reg-name" class="form-input" placeholder="Profile Name">
-                <input type="text" id="reg-phone" class="form-input" placeholder="Phone Number / Gmail">
-                <input type="password" id="reg-pass" class="form-input" placeholder="Password">
-                <button class="btn-auth-submit" onclick="handleSignup()">CREATE ACCOUNT</button>
-            </div>
-
-            <div id="login-form" class="auth-form">
-                <button class="google-btn" onclick="googleAuthSimulate()">
-                    <i class="fa-brands fa-google" style="color:#ea4335;"></i> Login with Gmail
-                </button>
-                <div style="text-align: center; font-size: 11px; color: #64748b; margin-bottom: 12px;">- OR WITH PHONE/PASSWORD -</div>
-
-                <input type="text" id="login-phone" class="form-input" placeholder="Phone Number / Gmail">
+            <div id="login-form" class="auth-form active">
+                <input type="text" id="login-phone" class="form-input" placeholder="Phone Number">
                 <input type="password" id="login-pass" class="form-input" placeholder="Password">
                 <button class="btn-auth-submit" onclick="handleLogin()">LOGIN</button>
+            </div>
+
+            <div id="signup-form" class="auth-form">
+                <input type="text" id="reg-name" class="form-input" placeholder="Full Name">
+                <input type="text" id="reg-phone" class="form-input" placeholder="Phone Number">
+                <input type="password" id="reg-pass" class="form-input" placeholder="Password">
+                <button class="btn-auth-submit" onclick="handleSignup()">CREATE ACCOUNT</button>
             </div>
 
         </div>
@@ -268,5 +226,4 @@
 
     <script src="script.js"></script>
 </body>
-                        </html>
-        
+</html>
