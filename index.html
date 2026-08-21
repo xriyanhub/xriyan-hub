@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free Fire Topup - XRIYAN HUB</title>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
-        body { background-color: #0f172a; color: #ffffff; padding: 15px; max-width: 600px; margin: 0 auto; }
+        body { background-color: #0f172a; color: #ffffff; padding: 15px; max-width: 600px; margin: 0 auto; position: relative; }
 
         .sec-title { color: #38bdf8; font-size: 18px; margin: 15px 0 10px 0; }
 
         /* Package Grid */
         .pkg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .pkg-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; }
+        .pkg-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: 0.2s; }
         .pkg-card.selected { border-color: #38bdf8; background: #0f2942; }
         .pkg-card h4 { font-size: 15px; color: #fff; margin-bottom: 4px; }
         .pkg-card p { font-size: 13px; color: #38bdf8; font-weight: bold; }
@@ -23,21 +25,30 @@
         .form-input { width: 100%; padding: 12px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; outline: none; }
         .form-input:focus { border-color: #38bdf8; }
 
-        /* Payment Buttons (Side by Side) */
+        /* Payment Buttons */
         .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .pay-btn { background: #1e293b; border: 1px solid #334155; padding: 12px; text-align: center; border-radius: 8px; font-weight: bold; cursor: pointer; color: #fff; }
         .pay-btn.bkash-active { background: #881337; border-color: #e91e63; }
         .pay-btn.nagad-active { background: #7c2d12; border-color: #f97316; }
 
-        /* Number Display Box */
+        /* Number Display Box with Copy */
         .num-box { background: #1e293b; border: 1px dashed #38bdf8; border-radius: 8px; padding: 12px; margin-bottom: 12px; display: none; }
-        .num-box p { font-size: 13px; color: #eab308; margin-bottom: 4px; font-weight: bold; }
-        .num-box div { font-size: 15px; color: #fff; font-weight: bold; }
+        .num-box p { font-size: 13px; color: #eab308; margin-bottom: 8px; font-weight: bold; }
+        
+        .num-item { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; font-size: 15px; font-weight: bold; }
+        .copy-btn { background: #38bdf8; color: #0f172a; border: none; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
         .btn-buy { width: 100%; padding: 14px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+
+        /* Custom Notification Toast */
+        #notification { visibility: hidden; min-width: 280px; background-color: #38bdf8; color: #0f172a; text-align: center; border-radius: 8px; padding: 12px; position: fixed; z-index: 999; top: 20px; left: 50%; transform: translateX(-50%); font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s, top 0.3s; }
+        #notification.show { visibility: visible; opacity: 1; top: 30px; }
     </style>
 </head>
 <body>
+
+    <!-- Notification Toast Box -->
+    <div id="notification"></div>
 
     <!-- ১. প্যাকেজ নির্বাচন -->
     <h3 class="sec-title">১. প্যাকেজ নির্বাচন করুন</h3>
@@ -80,7 +91,7 @@
         <div class="pay-btn" id="btn-nagad" onclick="showNumber('nagad')">Nagad</div>
     </div>
 
-    <!-- নম্বর দেখানোর বক্স -->
+    <!-- নম্বর দেখানোর বক্স (Copy Option সহ) -->
     <div class="num-box" id="num-display-box">
         <p id="method-title">Send Money করুন নিচের নম্বরে:</p>
         <div id="number-list"></div>
@@ -95,10 +106,24 @@
         let selectedPackage = "";
         let selectedPayment = "";
 
+        // Notification Function
+        function showNotification(msg) {
+            let notify = document.getElementById("notification");
+            notify.innerText = msg;
+            notify.className = "show";
+            setTimeout(function(){ notify.className = notify.className.replace("show", ""); }, 3000);
+        }
+
         function selectPkg(element, name, price) {
             document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
             element.classList.add('selected');
             selectedPackage = name + " - " + price;
+            showNotification("সিলেক্ট করা হয়েছে: " + name);
+        }
+
+        function copyNum(num) {
+            navigator.clipboard.writeText(num);
+            showNotification("নম্বর কপি হয়েছে: " + num);
         }
 
         function showNumber(type) {
@@ -113,11 +138,27 @@
             if(type === 'bkash') {
                 bKashBtn.className = 'pay-btn bkash-active';
                 nagadBtn.className = 'pay-btn';
-                numList.innerHTML = "bKash Personal (Send Money):<br>📌 01602543660<br>📌 01727127735";
+                numList.innerHTML = `
+                    <div class="num-item">
+                        <span>01602543660</span>
+                        <button class="copy-btn" onclick="copyNum('01602543660')"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="num-item">
+                        <span>01727127735</span>
+                        <button class="copy-btn" onclick="copyNum('01727127735')"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>`;
             } else {
                 nagadBtn.className = 'pay-btn nagad-active';
                 bKashBtn.className = 'pay-btn';
-                numList.innerHTML = "Nagad Personal (Send Money):<br>📌 01804334909<br>📌 01602543660";
+                numList.innerHTML = `
+                    <div class="num-item">
+                        <span>01804334909</span>
+                        <button class="copy-btn" onclick="copyNum('01804334909')"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="num-item">
+                        <span>01602543660</span>
+                        <button class="copy-btn" onclick="copyNum('01602543660')"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>`;
             }
         }
 
@@ -125,13 +166,18 @@
             let uid = document.getElementById('player-uid').value;
             let trx = document.getElementById('trx-id').value;
 
-            if(!selectedPackage) return alert("দয়া করে একটি প্যাকেজ সিলেক্ট করুন!");
-            if(!uid) return alert("দয়া করে Player ID (UID) দিন!");
-            if(!selectedPayment) return alert("bKash অথবা Nagad সিলেক্ট করুন!");
-            if(!trx) return alert("টাকা পাঠানোর পর পেমেন্ট নম্বর ও TrxID দিন!");
+            if(!selectedPackage) return showNotification("দয়া করে একটি প্যাকেজ সিলেক্ট করুন!");
+            if(!uid) return showNotification("দয়া করে Player ID (UID) দিন!");
+            if(!selectedPayment) return showNotification("bKash অথবা Nagad সিলেক্ট করুন!");
+            if(!trx) return showNotification("টাকা পাঠানোর পর TrxID দিন!");
 
-            alert("ধন্যবাদ!\nআপনার " + selectedPackage + " অর্ডারটি জমা হয়েছে।\nUID: " + uid + "\nTrxID: " + trx);
+            showNotification("ধন্যবাদ! আপনার অর্ডারটি জমা হয়েছে।");
+            
+            // Clear inputs
+            document.getElementById('player-uid').value = "";
+            document.getElementById('trx-id').value = "";
         }
     </script>
 </body>
-</html>
+    </html>
+    
