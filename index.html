@@ -57,13 +57,11 @@
     </header>
 
     <div class="container">
-        <!-- 1. HOME PAGE (GAME GRID) -->
         <div id="home-page">
             <h3 style="margin-bottom:15px; color:#cbd5e1; font-size: 15px;">Select Game to Topup</h3>
             <div class="game-grid" id="game-list"></div>
         </div>
 
-        <!-- 2. OFFER & ORDER PAGE -->
         <div id="offer-page">
             <h2 id="selected-game-title" style="color:#38bdf8; font-size:20px;"></h2>
             
@@ -87,7 +85,6 @@
                     </label>
                 </div>
 
-                <!-- Number Selection Box -->
                 <div id="number-box" class="num-box">
                     <p style="font-size: 12px; color: #eab308; font-weight: bold;">টাকা পাঠিয়ে নম্বরটি সিলেক্ট করুন:</p>
                     <div id="num-list"></div>
@@ -215,7 +212,7 @@
             }, 2000);
         }
 
-        // টেলিগ্রাম বটে অর্ডার পাঠানো
+        // টেলিগ্রাম বটে অর্ডার পাঠানো (One-click Copy formatting সহ)
         const BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E"; 
         const CHAT_ID = "7623733350"; 
 
@@ -223,33 +220,37 @@
             e.preventDefault();
 
             let pkg = document.querySelector('input[name="selected_pkg"]:checked')?.value;
-            let uid = document.getElementById("player-uid").value;
+            let uid = document.getElementById("player-uid").value.trim();
             let payMethod = document.querySelector('input[name="pay_method"]:checked')?.value;
             let sentNum = document.querySelector('input[name="selected_num"]:checked')?.value;
-            let trx = document.getElementById("trx-id").value;
+            let trx = document.getElementById("trx-id").value.trim();
 
             let btn = document.getElementById("sub-btn");
             btn.innerText = "Processing...";
             btn.disabled = true;
 
-            let textMessage = `🛒 NEW TOPUP ORDER\n\n` +
-                              `🎮 Game: ${currentGameName}\n` +
-                              `💎 Package: ${pkg}\n` +
-                              `🆔 Player ID: ${uid}\n` +
-                              `💳 Payment Method: ${payMethod}\n` +
-                              `📲 Sent Money To: ${sentNum}\n` +
-                              `📝 Sender Num/TrxID: ${trx}`;
+            // ` Player ID ` এবং ` TrxID ` টেলিগ্রামে এক ক্লিকে কপি হবে
+            let textMessage = `🛒 *NEW TOPUP ORDER*\n\n` +
+                              `🎮 *Game:* ${currentGameName}\n` +
+                              `💎 *Package:* ${pkg}\n` +
+                              `🆔 *Player ID:* \`${uid}\`\n` +
+                              `💳 *Payment Method:* ${payMethod}\n` +
+                              `📲 *Sent Money To:* ${sentNum}\n` +
+                              `📝 *Sender Num/TrxID:* \`${trx}\``;
 
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: textMessage })
+                body: JSON.stringify({ 
+                    chat_id: CHAT_ID, 
+                    text: textMessage,
+                    parse_mode: 'Markdown'
+                })
             })
             .then(res => res.json())
             .then(data => {
                 if (data.ok) {
                     alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
-                    // অর্ডার দেওয়ার পরেও পেজ রিলোড হবে না, এই পেজেই থাকবে
                     document.getElementById("order-form").reset();
                     document.getElementById("number-box").style.display = "none";
                 } else {
@@ -264,5 +265,5 @@
         }
     </script>
 </body>
-  </html>
-
+                    </html>
+                    
