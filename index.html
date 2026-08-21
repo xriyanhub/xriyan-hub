@@ -22,9 +22,10 @@
 
         /* Game Grid */
         .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .game-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; }
-        .game-card img { width: 60px; height: 60px; border-radius: 10px; margin-bottom: 8px; object-fit: cover; }
-        .game-card h3 { font-size: 16px; color: #fff; }
+        .game-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px 10px; text-align: center; cursor: pointer; transition: 0.2s; text-decoration: none; display: block; }
+        .game-card:hover { border-color: #38bdf8; transform: translateY(-2px); }
+        .game-icon { font-size: 36px; color: #38bdf8; margin-bottom: 8px; }
+        .game-card h3 { font-size: 15px; color: #fff; }
 
         /* Tournament */
         .tourney-card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 15px; margin-bottom: 12px; }
@@ -38,16 +39,10 @@
 
         /* Modals & Inputs */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); z-index: 2000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { background: #1e293b; width: 100%; max-width: 400px; padding: 20px; border-radius: 16px; border: 1px solid #38bdf8; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: #1e293b; width: 100%; max-width: 400px; padding: 20px; border-radius: 16px; border: 1px solid #38bdf8; position: relative; }
         .close-modal { position: absolute; top: 12px; right: 15px; font-size: 20px; color: #94a3b8; cursor: pointer; }
         .form-input { width: 100%; padding: 10px; margin: 6px 0 12px 0; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; }
         .btn-submit { width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        
-        /* Payment Selection Box */
-        .pay-options { display: flex; gap: 10px; margin-bottom: 10px; }
-        .pay-btn { flex: 1; padding: 10px; border: 1px solid #334155; background: #0f172a; color: #fff; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; }
-        .pay-btn.selected { border-color: #38bdf8; background: #1e3a8a; }
-        .send-info { background: #0f172a; padding: 10px; border-radius: 8px; border: 1px dashed #38bdf8; margin-bottom: 12px; font-size: 13px; display: none; }
     </style>
 </head>
 <body>
@@ -65,22 +60,72 @@
         <div id="topup-tab" class="tab-content active">
             <h3 style="margin-bottom:12px; color:#cbd5e1;">Select Game to Topup</h3>
             <div class="game-grid">
-                <div class="game-card" onclick="openOrderModal('Free Fire')">
-                    <img src="https://i.ibb.co/6y4G1vR/freefire.png" alt="FF" onerror="this.src='https://via.placeholder.com/60?text=FF'">
+                
+                <a href="free-fire.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-fire-flame-curved"></i></div>
                     <h3>Free Fire</h3>
-                </div>
-                <div class="game-card" onclick="openOrderModal('PUBG Mobile')">
-                    <img src="https://i.ibb.co/Xz9Z4sT/pubg.png" alt="PUBG" onerror="this.src='https://via.placeholder.com/60?text=PUBG'">
+                </a>
+
+                <a href="pubg-mobile.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-crosshairs"></i></div>
                     <h3>PUBG Mobile</h3>
-                </div>
-                <div class="game-card" onclick="openOrderModal('Mobile Legends')">
-                    <img src="https://via.placeholder.com/60?text=MLBB" alt="MLBB">
+                </a>
+
+                <a href="mobile-legends.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-shield-halved"></i></div>
                     <h3>Mobile Legends</h3>
-                </div>
-                <div class="game-card" onclick="openOrderModal('Brawl Stars')">
-                    <img src="https://via.placeholder.com/60?text=Brawl" alt="Brawl Stars">
+                </a>
+
+                <a href="brawl-stars.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-star"></i></div>
                     <h3>Brawl Stars</h3>
-                </div>
+                </a>
+
+                <a href="clash-of-clans.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-chess-knight"></i></div>
+                    <h3>Clash of Clans</h3>
+                </a>
+
+                <a href="ea-sports-fc-mobile.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-football"></i></div>
+                    <h3>FC Mobile</h3>
+                </a>
+
+                <a href="call-of-duty-mobile.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-gun"></i></div>
+                    <h3>Call of Duty</h3>
+                </a>
+
+                <a href="counter-strike-2.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <h3>Counter Strike 2</h3>
+                </a>
+
+                <a href="efootball-mobile.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-futbol"></i></div>
+                    <h3>eFootball Mobile</h3>
+                </a>
+
+                <a href="gta-v-online.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-car-burst"></i></div>
+                    <h3>GTA V Online</h3>
+                </a>
+
+                <a href="honor-of-kings.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-crown"></i></div>
+                    <h3>Honor of Kings</h3>
+                </a>
+
+                <a href="league-of-legends.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-gem"></i></div>
+                    <h3>League of Legends</h3>
+                </a>
+
+                <a href="valorant-pc.html" class="game-card">
+                    <div class="game-icon"><i class="fa-solid fa-v"></i></div>
+                    <h3>Valorant PC</h3>
+                </a>
+
             </div>
         </div>
 
@@ -113,44 +158,6 @@
         <div class="nav-item active" onclick="switchTab('topup-tab', this)"><i class="fa-solid fa-gem"></i>Topup</div>
         <div class="nav-item" onclick="switchTab('tournament-tab', this)"><i class="fa-solid fa-trophy"></i>Tournament</div>
         <div class="nav-item" onclick="switchTab('leaderboard-tab', this)"><i class="fa-solid fa-chart-simple"></i>Leaderboard</div>
-    </div>
-
-    <!-- Order Modal -->
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal('orderModal')">&times;</span>
-            <h3 id="modal-game-title" style="color:#38bdf8; margin-bottom:15px;">Topup Game</h3>
-            
-            <label style="font-size:13px; color:#cbd5e1;">Your Name:</label>
-            <input type="text" id="user-name" class="form-input" placeholder="Enter Your Name">
-
-            <label style="font-size:13px; color:#cbd5e1;">Player UID / Player ID:</label>
-            <input type="text" id="player-uid" class="form-input" placeholder="Enter Player UID">
-
-            <label style="font-size:13px; color:#cbd5e1;">Select Package:</label>
-            <select id="package-select" class="form-input">
-                <option value="80 BDT">115 Diamonds - 80 BDT</option>
-                <option value="160 BDT">240 Diamonds - 160 BDT</option>
-                <option value="400 BDT">610 Diamonds - 400 BDT</option>
-            </select>
-
-            <label style="font-size:13px; color:#cbd5e1;">Select Payment Method:</label>
-            <div class="pay-options">
-                <div class="pay-btn" id="btn-bkash" onclick="selectPayMethod('bKash')">bKash</div>
-                <div class="pay-btn" id="btn-nagad" onclick="selectPayMethod('Nagad')">Nagad</div>
-            </div>
-
-            <!-- Send Money Instruction Details -->
-            <div class="send-info" id="send-info-box">
-                <p style="color:#eab308; font-weight:bold; margin-bottom:5px;">Send Money Instruction:</p>
-                <p id="send-num-text"></p>
-            </div>
-
-            <label style="font-size:13px; color:#cbd5e1;">Transaction ID (TrxID):</label>
-            <input type="text" id="trx-id" class="form-input" placeholder="Enter TrxID after Send Money">
-
-            <button class="btn-submit" onclick="confirmOrder()">BUY NOW</button>
-        </div>
     </div>
 
     <!-- Auth Modal -->
