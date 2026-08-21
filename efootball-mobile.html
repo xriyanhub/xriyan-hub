@@ -1,1 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eFootball Mobile Top Up - XRIYAN HUB</title>
+
+    <script>
+        // ========================================================
+        // ⚡ ACTIVE OFFERINGS (eFootball Coins & Passes)
+        // ========================================================
+        const N1="130 eFootball Coins";   const P1=140;
+        const N2="550 eFootball Coins";   const P2=550;
+        const N3="1040 eFootball Coins";  const P3=1050;
+        const N4="2130 eFootball Coins";  const P4=2100;
+        const N5="3250 eFootball Coins";  const P5=3150;
+        const N6="Value Match Pass";      const P6=500;
+        const N7="Premium Match Pass";    const P7=1000;
+
+        // ========================================================
+        // ⏳ UPCOMING / VAULT PACKS (শুধু // কেটে নাম ও দাম দিন)
+        // ========================================================
+        // const N8="5700 Coins";         const P8=5200;
+        // const N9="12800 Coins";        const P9=11500;
+        // const N10="Item 10";           const P10=0;
+        // const N11="Item 11";           const P11=0;
+        // const N12="Item 12";           const P12=0;
+        // const N13="Item 13";           const P13=0;
+        // const N14="Item 14";           const P14=0;
+        // const N15="Item 15";           const P15=0;
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0f172a; color: #ffffff; padding-bottom: 50px; }
+        header { background: #1e293b; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #38bdf8; }
+        .back-btn { color: #38bdf8; text-decoration: none; font-weight: bold; }
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        .banner { width: 100%; height: 120px; background: linear-gradient(135deg, #0284c7, #0369a1); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; color: #fff; }
+        .section-title { font-size: 16px; margin-bottom: 12px; color: #38bdf8; }
+        
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
+        .card { background: #1e293b; border: 2px solid #334155; border-radius: 10px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .card:hover, .card.active { border-color: #38bdf8; background: #0f2942; }
+        .card h4 { font-size: 15px; margin-bottom: 5px; color: #fff; }
+        .card p { font-size: 14px; color: #38bdf8; font-weight: bold; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; color: #cbd5e1; }
+        .form-group input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; font-size: 15px; outline: none; }
+        
+        .btn-submit { width: 100%; padding: 14px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .btn-submit:disabled { background: #64748b; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">← Home</a>
+        <h1>eFootball Mobile</h1>
+        <div></div>
+    </header>
+
+    <div class="container">
+        <div class="banner">⚽ eFOOTBALL ⚽</div>
+
+        <h3 class="section-title">১. প্যাকেজ নির্বাচন করুন</h3>
+        <div class="grid" id="package-grid">
+            <script>
+                function renderCard(name, price) {
+                    if (typeof name !== 'undefined' && typeof price !== 'undefined') {
+                        document.write(`
+                            <div class="card" onclick="selectPackage(this, '${name}', '${price} BDT')">
+                                <h4>${name}</h4>
+                                <p>${price} BDT</p>
+                            </div>
+                        `);
+                    }
+                }
+
+                if (typeof N1 !== 'undefined') renderCard(N1, P1);
+                if (typeof N2 !== 'undefined') renderCard(N2, P2);
+                if (typeof N3 !== 'undefined') renderCard(N3, P3);
+                if (typeof N4 !== 'undefined') renderCard(N4, P4);
+                if (typeof N5 !== 'undefined') renderCard(N5, P5);
+                if (typeof N6 !== 'undefined') renderCard(N6, P6);
+                if (typeof N7 !== 'undefined') renderCard(N7, P7);
+                if (typeof N8 !== 'undefined') renderCard(N8, P8);
+                if (typeof N9 !== 'undefined') renderCard(N9, P9);
+                if (typeof N10 !== 'undefined') renderCard(N10, P10);
+                if (typeof N11 !== 'undefined') renderCard(N11, P11);
+                if (typeof N12 !== 'undefined') renderCard(N12, P12);
+                if (typeof N13 !== 'undefined') renderCard(N13, P13);
+                if (typeof N14 !== 'undefined') renderCard(N14, P14);
+                if (typeof N15 !== 'undefined') renderCard(N15, P15);
+            </script>
+        </div>
+
+        <h3 class="section-title">২. প্লেয়ার তথ্য দিন</h3>
+        <div class="form-group">
+            <label for="player-id">Konami ID Email / User ID:</label>
+            <input type="text" id="player-id" placeholder="Ex: example@gmail.com or 123456789">
+        </div>
+
+        <div class="form-group">
+            <label for="payment-info">পেমেন্ট নম্বর ও TrxID (বিকাশ/নগদ):</label>
+            <input type="text" id="payment-info" placeholder="Ex: 017... / TrxID: AB123456">
+        </div>
+
+        <button class="btn-submit" id="submit-btn" onclick="sendOrder()">BUY NOW (অর্ডার করুন)</button>
+    </div>
+
+    <script>
+        let selectedPackage = "";
+        let selectedPrice = "";
+
+        const TELEGRAM_BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E";
+        const TELEGRAM_CHAT_ID = "7623733350";
+
+        function selectPackage(element, pack, price) {
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            element.classList.add('active');
+            selectedPackage = pack;
+            selectedPrice = price;
+        }
+
+        function sendOrder() {
+            const playerId = document.getElementById('player-id').value.trim();
+            const paymentInfo = document.getElementById('payment-info').value.trim();
+
+            if (!selectedPackage) { alert("দয়া করে একটি প্যাকেজ সিলেক্ট করুন!"); return; }
+            if (!playerId) { alert("দয়া করে আপনার Konami ID Email বা User ID দিন!"); return; }
+            if (!paymentInfo) { alert("দয়া করে পেমেন্ট নম্বর ও TrxID দিন!"); return; }
+
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "অর্ডার প্রসেস হচ্ছে...";
+            btn.disabled = true;
+
+            const message = `🛒 *New eFootball Order!*%0A%0A` +
+                `⚽ *Game:* eFootball Mobile%0A` +
+                `💎 *Package:* ${selectedPackage}%0A` +
+                `💰 *Price:* ${selectedPrice}%0A` +
+                `🆔 *Player Info:* \`${playerId}\`%0A` +
+                `💳 *Payment:* \`${paymentInfo}\``;
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${message}&parse_mode=Markdown`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
+                        document.getElementById('player-id').value = '';
+                        document.getElementById('payment-info').value = '';
+                        document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+                        selectedPackage = ""; selectedPrice = "";
+                    } else { alert("অর্ডার পাঠাতে সমস্যা হয়েছে।"); }
+                })
+                .catch(err => { alert("নেটওয়ার্ক সমস্যা!"); })
+                .finally(() => { btn.innerText = "BUY NOW (অর্ডার করুন)"; btn.disabled = false; });
+        }
+    </script>
+</body>
+</html>
 
