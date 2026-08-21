@@ -47,6 +47,7 @@
         .form-input:focus { border-color: #38bdf8; }
 
         .btn-submit { width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .btn-submit:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -65,7 +66,7 @@
         <div id="offer-page">
             <h2 id="selected-game-title" style="color:#38bdf8; font-size:20px;"></h2>
             
-            <form id="order-form" onsubmit="sendTelegramOrder(event)">
+            <form id="order-form" onsubmit="handlePaymentAndOrder(event)">
                 <h4 class="sec-title">১. প্যাকেজ নির্বাচন করুন</h4>
                 <div class="pkg-grid" id="pkg-list"></div>
 
@@ -90,8 +91,8 @@
                     <div id="num-list"></div>
                 </div>
 
-                <label class="form-label">আপনার পেমেন্ট নম্বর ও TrxID:</label>
-                <input type="text" id="trx-id" class="form-input" placeholder="Ex: 017... / TrxID" required>
+                <label class="form-label">Transaction ID (TrxID):</label>
+                <input type="text" id="trx-id" class="form-input" placeholder="Ex: 8N7A6D5E" required>
 
                 <button type="submit" id="sub-btn" class="btn-submit">BUY NOW (অর্ডার করুন)</button>
             </form>
@@ -104,7 +105,13 @@
             window.Telegram.WebApp.expand();
         }
 
-        // ১৩টি গেমের সম্পূর্ণ ডেটা
+        // UddoktaPay & Telegram Configuration
+        const UDDOKTAPAY_BASE_URL = "https://xriyanhub.paymently.io/api";
+        const UDDOKTAPAY_API_KEY = "T7a6KxQrlSqb1fELUInIK3vjZpcF6wy"; // আপনার সংগৃহীত API Key
+        const BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E"; 
+        const CHAT_ID = "7623733350"; 
+
+        // ১৩টি গেমের ডেটা
         const gamesData = {
             1: { name: "Free Fire", icon: "fa-fire-flame-curved", uidText: "Player ID (UID):", pkgs: ["115 Diamonds - 80 BDT", "240 Diamonds - 160 BDT", "610 Diamonds - 420 BDT", "Weekly Pass - 165 BDT"] },
             2: { name: "PUBG Mobile", icon: "fa-crosshairs", uidText: "Character ID (UID):", pkgs: ["60 UC - 95 BDT", "325 UC - 440 BDT", "660 UC - 860 BDT"] },
@@ -122,13 +129,13 @@
         };
 
         const paymentNumbers = {
-            bKash: ["01602543660", "01727127735"],
-            Nagad: ["01804334909", "01602543660"]
+            bKash: ["01727127735"],
+            Nagad: ["01727127735"]
         };
 
         let currentGameName = "";
 
-        // হোম পেজে ১৩টি গেমের আইকন লোড করা
+        // হোম পেজে গেম আইকন লোড করা
         const gameListContainer = document.getElementById("game-list");
         Object.keys(gamesData).forEach(id => {
             let g = gamesData[id];
@@ -140,14 +147,12 @@
             `;
         });
 
-        // গেমে ক্লিক করলে অফার পেজ ওপেন হবে
         function openGameOffer(id) {
             let g = gamesData[id];
             currentGameName = g.name;
             document.getElementById("selected-game-title").innerText = g.name + " Topup";
             document.getElementById("uid-label").innerText = g.uidText;
 
-            // প্যাকেজ তৈরি
             let pkgHTML = "";
             g.pkgs.forEach((pkg, index) => {
                 let parts = pkg.split(" - ");
@@ -163,7 +168,6 @@
             });
             document.getElementById("pkg-list").innerHTML = pkgHTML;
 
-            // ভিউ চেঞ্জ
             document.getElementById("home-page").style.display = "none";
             document.getElementById("offer-page").style.display = "block";
             document.getElementById("btn-home").style.display = "block";
@@ -171,14 +175,12 @@
             document.getElementById("order-form").reset();
         }
 
-        // হোম পেজে ফিরে যাওয়ার ফাংশন
         function goHome() {
             document.getElementById("home-page").style.display = "block";
             document.getElementById("offer-page").style.display = "none";
             document.getElementById("btn-home").style.display = "none";
         }
 
-        // পেমেন্ট মেথড সিলেক্ট করলে নম্বর দেখাবে ও সিলেক্ট করার অপশন দেবে
         function showNumbers(method) {
             let numBox = document.getElementById("number-box");
             let numList = document.getElementById("num-list");
@@ -212,11 +214,8 @@
             }, 2000);
         }
 
-        // টেলিগ্রাম বটে অর্ডার পাঠানো (One-click Copy formatting সহ)
-        const BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E"; 
-        const CHAT_ID = "7623733350"; 
-
-        function sendTelegramOrder(e) {
+        // অটো-পেমেন্ট ভেরিফাই ও টেলিগ্রামে মেসেজ পাঠানো
+        async function handlePaymentAndOrder(e) {
             e.preventDefault();
 
             let pkg = document.querySelector('input[name="selected_pkg"]:checked')?.value;
@@ -226,44 +225,67 @@
             let trx = document.getElementById("trx-id").value.trim();
 
             let btn = document.getElementById("sub-btn");
-            btn.innerText = "Processing...";
+            btn.innerText = "Verifying Payment...";
             btn.disabled = true;
 
-            // ` Player ID ` এবং ` TrxID ` টেলিগ্রামে এক ক্লিকে কপি হবে
-            let textMessage = `🛒 *NEW TOPUP ORDER*\n\n` +
-                              `🎮 *Game:* ${currentGameName}\n` +
-                              `💎 *Package:* ${pkg}\n` +
-                              `🆔 *Player ID:* \`${uid}\`\n` +
-                              `💳 *Payment Method:* ${payMethod}\n` +
-                              `📲 *Sent Money To:* ${sentNum}\n` +
-                              `📝 *Sender Num/TrxID:* \`${trx}\``;
+            try {
+                // ১. UddoktaPay দিয়ে TrxID ভেরিফাই করা
+                const verifyResponse = await fetch(`${UDDOKTAPAY_BASE_URL}/verify-payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RT-UDDOKTAPAY-API-KEY': UDDOKTAPAY_API_KEY
+                    },
+                    body: JSON.stringify({ invoice_id: trx })
+                });
 
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    chat_id: CHAT_ID, 
-                    text: textMessage,
-                    parse_mode: 'Markdown'
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.ok) {
-                    alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
-                    document.getElementById("order-form").reset();
-                    document.getElementById("number-box").style.display = "none";
+                const verifyData = await verifyResponse.json();
+
+                // যদি ভেরিফিকেশন সফল হয়
+                if (verifyData.status === 'COMPLETED' || verifyData.status === 'SUCCESS') {
+                    btn.innerText = "Sending Order...";
+
+                    // ২. টেলিগ্রাম বটে অর্ডার ডিটেইলস পাঠানো
+                    let textMessage = `✅ *PAID TOPUP ORDER*\n\n` +
+                                      `🎮 *Game:* ${currentGameName}\n` +
+                                      `💎 *Package:* ${pkg}\n` +
+                                      `🆔 *Player ID:* \`${uid}\`\n` +
+                                      `💳 *Payment Method:* ${payMethod}\n` +
+                                      `📲 *Sent Money To:* ${sentNum}\n` +
+                                      `📝 *Verified TrxID:* \`${trx}\`\n` +
+                                      `💰 *Paid Amount:* ${verifyData.amount || 'Verified'} BDT`;
+
+                    const tgRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            chat_id: CHAT_ID, 
+                            text: textMessage,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+
+                    const tgData = await tgRes.json();
+
+                    if (tgData.ok) {
+                        alert("🎉 পেমেন্ট সফলভাবে ভেরিফাই করা হয়েছে এবং অর্ডার জমা পড়েছে!");
+                        document.getElementById("order-form").reset();
+                        document.getElementById("number-box").style.display = "none";
+                        goHome();
+                    } else {
+                        alert("❌ অর্ডার টেলিগ্রামে পাঠাতে সমস্যা হয়েছে।");
+                    }
                 } else {
-                    alert("❌ এরর: " + data.description);
+                    alert("❌ সঠিক TrxID পাওয়া যায়নি বা পেমেন্ট এখনো সফল হয়নি! অনুগ্রহ করে সঠিক TrxID দিন।");
                 }
-            })
-            .catch(() => alert("❌ নেটওয়ার্ক এরর! আবার চেষ্টা করুন।"))
-            .finally(() => {
+            } catch (err) {
+                console.error(err);
+                alert("⚠️ পেমেন্ট ভেরিফিকেশনে সমস্যা হয়েছে। আপনার ইন্টারনেট বা TrxID চেক করুন।");
+            } finally {
                 btn.innerText = "BUY NOW (অর্ডার করুন)";
                 btn.disabled = false;
-            });
+            }
         }
     </script>
 </body>
-                    </html>
-                    
+</html>
