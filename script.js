@@ -1,127 +1,88 @@
 let currentUser = localStorage.getItem('xriyan_user') || null;
-let userBalance = parseInt(localStorage.getItem('xriyan_balance')) || 0;
+let selectedGame = "";
+let selectedMethod = "";
 
-function updateHeaderUser() {
-    const btnText = document.getElementById('btn-user-text');
-    if (currentUser) {
-        btnText.innerText = currentUser;
-    } else {
-        btnText.innerText = "Login";
-    }
+function updateHeader() {
+    document.getElementById('btn-user-text').innerText = currentUser ? currentUser : "Login";
 }
-updateHeaderUser();
+updateHeader();
 
-function openProfileOrAuth() {
-    if (currentUser) {
-        document.getElementById('user-profile-name').innerText = currentUser;
-        document.getElementById('user-balance-display').innerText = "Balance: " + userBalance + " BDT";
-        document.getElementById('profileModal').style.display = 'flex';
+function switchTab(tabId, el) {
+    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(ni => ni.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    el.classList.add('active');
+}
+
+function openAuthModal() {
+    if(currentUser) {
+        alert("Logged in as: " + currentUser);
     } else {
         document.getElementById('authModal').style.display = 'flex';
     }
 }
 
-function closeProfileModal() { document.getElementById('profileModal').style.display = 'none'; }
-function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
-
-function switchAuthForm(formId, el) {
-    document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(formId).classList.add('active');
-    el.classList.add('active');
-}
-
-function handleSignup() {
-    const name = document.getElementById('reg-name').value.trim();
-    const phone = document.getElementById('reg-phone').value.trim();
-    const pass = document.getElementById('reg-pass').value.trim();
-
-    if(!name || !phone || !pass) {
-        alert("সবগুলো ঘর ঠিকভাবে পূরণ করুন!");
-        return;
-    }
-
-    currentUser = name;
-    localStorage.setItem('xriyan_user', name);
-    localStorage.setItem('xriyan_balance', '0');
-    updateHeaderUser();
-    closeAuthModal();
-    alert("অ্যাকাউন্ট তৈরি সফল হয়েছে!");
-}
-
 function handleLogin() {
-    const phone = document.getElementById('login-phone').value.trim();
-    const pass = document.getElementById('login-pass').value.trim();
-
-    if(!phone || !pass) {
-        alert("ফোন নম্বর এবং পাসওয়ার্ড দিন!");
-        return;
-    }
-
+    let phone = document.getElementById('login-phone').value;
+    if(!phone) return alert("Enter Phone Number");
     currentUser = "User_" + phone.slice(-4);
     localStorage.setItem('xriyan_user', currentUser);
-    updateHeaderUser();
-    closeAuthModal();
-    alert("লগইন সফল হয়েছে!");
+    updateHeader();
+    closeModal('authModal');
 }
 
-function handleLogout() {
-    localStorage.removeItem('xriyan_user');
-    currentUser = null;
-    updateHeaderUser();
-    closeProfileModal();
-}
-
-function handleGameOrder(gameName) {
-    if(!currentUser) {
-        alert("অর্ডার করতে প্রথমে লগইন করুন!");
-        openProfileOrAuth();
-        return;
-    }
-
-    if(userBalance <= 0) {
-        alert("আপনার ব্যালেন্স ০ টাকা! অর্ডার করতে প্রথমে টাকা এড করুন।");
-        openProfileOrAuth();
-        return;
-    }
-
-    alert(gameName + " অর্ডার গ্রহণ করা হয়েছে!");
-}
-
-function switchTab(tabId, el) {
-    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(ni => ni.classList.remove('active'));
+function openOrderModal(game) {
+    selectedGame = game;
+    document.getElementById('modal-game-title').innerText = game + " Topup";
     
-    document.getElementById(tabId).classList.add('active');
-    el.classList.add('active');
+    // Auto fill name if logged in
+    if(currentUser) {
+        document.getElementById('user-name').value = currentUser;
+    }
+    
+    document.getElementById('orderModal').style.display = 'flex';
 }
 
-function switchSubTab(subId, el) {
-    document.querySelectorAll('.sub-content').forEach(sc => sc.style.display = 'none');
-    document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
-
-    document.getElementById(subId).style.display = 'block';
-    el.classList.add('active');
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
 }
 
-function renderLeaderboard() {
-    const container = document.getElementById('topup-leaderboard-container');
-    const dummyData = [
-        { name: "XRIYAN BD", spent: "100,000 BDT" },
-        { name: "Shadow Gamer", spent: "75,000 BDT" },
-        { name: "Tanvir Boss", spent: "42,000 BDT" }
-    ];
+function selectPayMethod(method) {
+    selectedMethod = method;
+    
+    document.getElementById('btn-bkash').classList.remove('selected');
+    document.getElementById('btn-nagad').classList.remove('selected');
+    
+    let infoBox = document.getElementById('send-info-box');
+    let textObj = document.getElementById('send-num-text');
+    infoBox.style.display = 'block';
 
-    let html = "";
-    dummyData.forEach((item, index) => {
-        html += `
-        <div class="rank-item">
-            <span class="rank-number">${index === 0 ? '🥇 1' : index === 1 ? '🥈 2' : '🥉 3'}</span>
-            <span class="rank-name">${item.name}</span>
-            <span class="rank-score">${item.spent}</span>
-        </div>`;
-    });
-    container.innerHTML = html;
+    if(method === 'bKash') {
+        document.getElementById('btn-bkash').classList.add('selected');
+        textObj.innerHTML = "bKash Personal (Send Money):<br><b>01602543660</b> / <b>01727127735</b>";
+    } else if(method === 'Nagad') {
+        document.getElementById('btn-nagad').classList.add('selected');
+        textObj.innerHTML = "Nagad Personal (Send Money):<br><b>01804334909</b> / <b>01602543660</b>";
+    }
 }
 
-renderLeaderboard();
+function confirmOrder() {
+    let name = document.getElementById('user-name').value;
+    let uid = document.getElementById('player-uid').value;
+    let pkg = document.getElementById('package-select').value;
+    let trx = document.getElementById('trx-id').value;
+
+    if(!name) return alert("দয়া করে আপনার নাম দিন!");
+    if(!uid) return alert("দয়া করে Player UID দিন!");
+    if(!selectedMethod) return alert("bKash অথবা Nagad সিলেক্ট করুন!");
+    if(!trx) return alert("টাকা পাঠানোর পর TrxID দিন!");
+
+    alert("ধন্যবাদ " + name + "!\nআপনার " + selectedGame + " অর্ডারটি জমা হয়েছে।\nTrxID: " + trx);
+    
+    // Reset and Close
+    document.getElementById('trx-id').value = "";
+    document.getElementById('player-uid').value = "";
+    document.getElementById('send-info-box').style.display = 'none';
+    closeModal('orderModal');
+}
+    
