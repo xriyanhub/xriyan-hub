@@ -102,7 +102,33 @@
 
         .num-box { background: #0f172a; border: 1px dashed #38bdf8; border-radius: 8px; padding: 12px; margin: 10px 0; }
         .num-box p { font-size: 13px; color: #eab308; margin-bottom: 8px; font-weight: bold; }
-        .num-item { background: #1e293b; padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; font-size: 15px; font-weight: bold; letter-spacing: 1px; }
+        
+        /* Copy Item Box Style */
+        .num-item { 
+            background: #1e293b; 
+            padding: 8px 12px; 
+            border-radius: 6px; 
+            margin-bottom: 6px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            letter-spacing: 1px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-copy {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-copy:active { transform: scale(0.95); }
 
         /* Inputs */
         .form-label { display: block; font-size: 14px; color: #cbd5e1; margin: 12px 0 5px 0; }
@@ -240,15 +266,30 @@
                     <label for="g1-nagad" class="pay-card-item">Nagad</label>
                 </div>
 
+                <!-- বিকাশ নম্বর ও কপি বাটন -->
                 <div class="pay-details-bkash num-box">
                     <p>bKash Personal Send Money:</p>
-                    <div class="num-item">01602543660</div>
-                    <div class="num-item">01727127735</div>
+                    <div class="num-item">
+                        <span>01602543660</span>
+                        <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="num-item">
+                        <span>01727127735</span>
+                        <button type="button" class="btn-copy" onclick="copyText('01727127735', this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
                 </div>
+
+                <!-- নগদ নম্বর ও কপি বাটন -->
                 <div class="pay-details-nagad num-box">
                     <p>Nagad Personal Send Money:</p>
-                    <div class="num-item">01804334909</div>
-                    <div class="num-item">01602543660</div>
+                    <div class="num-item">
+                        <span>01804334909</span>
+                        <button type="button" class="btn-copy" onclick="copyText('01804334909', this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
+                    <div class="num-item">
+                        <span>01602543660</span>
+                        <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
                 </div>
 
                 <label class="form-label">পেমেন্ট নম্বর ও TrxID:</label>
@@ -289,11 +330,17 @@
 
                 <div class="pay-details-bkash num-box">
                     <p>bKash Personal Send Money:</p>
-                    <div class="num-item">01602543660</div>
+                    <div class="num-item">
+                        <span>01602543660</span>
+                        <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
                 </div>
                 <div class="pay-details-nagad num-box">
                     <p>Nagad Personal Send Money:</p>
-                    <div class="num-item">01804334909</div>
+                    <div class="num-item">
+                        <span>01804334909</span>
+                        <button type="button" class="btn-copy" onclick="copyText('01804334909', this)"><i class="fa-regular fa-copy"></i> Copy</button>
+                    </div>
                 </div>
 
                 <label class="form-label">পেমেন্ট নম্বর ও TrxID:</label>
@@ -304,7 +351,6 @@
     </div>
 
     <!-- GENERAL MODAL FOR OTHER GAMES (3 TO 13) -->
-    <!-- (Easily expandable for all other games) -->
     <input type="checkbox" id="game-3" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-3" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Mobile Legends</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
     <input type="checkbox" id="game-4" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-4" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Brawl Stars</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
     <input type="checkbox" id="game-5" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-5" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Clash of Clans</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
@@ -317,5 +363,21 @@
     <input type="checkbox" id="game-12" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-12" class="close-btn">&times;</label><h3 style="color:#38bdf8;">League of Legends</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
     <input type="checkbox" id="game-13" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-13" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Valorant PC</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
 
+    <!-- 1-CLICK COPY JAVASCRIPT -->
+    <script>
+        function copyText(num, btn) {
+            navigator.clipboard.writeText(num).then(() => {
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                btn.style.background = '#22c55e';
+                btn.style.color = '#fff';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+                    btn.style.background = '#38bdf8';
+                    btn.style.color = '#0f172a';
+                }, 2000);
+            });
+        }
+    </script>
 </body>
-</html>
+    </html>
+    
