@@ -1,4 +1,3 @@
-// LocalStorage Check
 let currentUser = localStorage.getItem('xriyan_user') || null;
 let userBalance = parseInt(localStorage.getItem('xriyan_balance')) || 0;
 
@@ -118,9 +117,7 @@ function renderLeaderboard() {
         html += `
         <div class="rank-item">
             <span class="rank-number">${index === 0 ? '🥇 1' : index === 1 ? '🥈 2' : '🥉 3'}</span>
-            <div class="rank-info">
-                <span class="rank-name">${item.name}</span>
-            </div>
+            <span class="rank-name">${item.name}</span>
             <span class="rank-score">${item.spent}</span>
         </div>`;
     });
