@@ -29,7 +29,8 @@
         #offer-page { display: none; background: #1e293b; border: 1px solid #38bdf8; border-radius: 16px; padding: 20px; margin-top: 10px; }
         .sec-title { color: #38bdf8; font-size: 15px; margin: 15px 0 8px 0; font-weight: bold; }
 
-        .pkg-grid, .pay-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .pkg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .pkg-card, .pay-card { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; }
         
         input[type="radio"] { display: none; }
@@ -48,6 +49,8 @@
 
         .btn-submit { width: 100%; padding: 12px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
         .btn-submit:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; }
+
+        .unavailable-msg { color: #ef4444; font-size: 13px; font-weight: bold; margin-top: 5px; text-align: center; }
     </style>
 </head>
 <body>
@@ -84,10 +87,14 @@
                         <input type="radio" name="pay_method" value="Nagad" onclick="showNumbers('Nagad')">
                         <div class="pay-card">Nagad</div>
                     </label>
+                    <label>
+                        <input type="radio" name="pay_method" value="Rocket" onclick="showNumbers('Rocket')">
+                        <div class="pay-card">Rocket</div>
+                    </label>
                 </div>
 
                 <div id="number-box" class="num-box">
-                    <p style="font-size: 12px; color: #eab308; font-weight: bold;">টাকা পাঠিয়ে নম্বরটি সিলেক্ট করুন:</p>
+                    <p id="num-box-header" style="font-size: 12px; color: #eab308; font-weight: bold;">টাকা পাঠিয়ে নম্বরটি সিলেক্ট করুন:</p>
                     <div id="num-list"></div>
                 </div>
 
@@ -105,9 +112,31 @@
             window.Telegram.WebApp.expand();
         }
 
-        // UddoktaPay & Telegram Configuration
+        // ==========================================
+        // 💳 পেমেন্ট নম্বর কনফিগারেশন (এখানে পরিবর্তন করবেন)
+        // ==========================================
+        const paymentNumbers = {
+            bKash: [
+                // "01700000000",
+                // "01700000000",
+                // "01700000000",
+                // "01700000000"
+            ],
+            Nagad: [
+                "01804334909",
+                // "01800000000",
+                // "01800000000",
+                // "01800000000"
+            ],
+            Rocket: [
+                // "01900000000",
+                // "01900000000"
+            ]
+        };
+
+        // API & Telegram Settings
         const UDDOKTAPAY_BASE_URL = "https://xriyanhub.paymently.io/api";
-        const UDDOKTAPAY_API_KEY = "T7a6KxQrlSqb1fELUInIK3vjZpcF6wy"; // আপনার সংগৃহীত API Key
+        const UDDOKTAPAY_API_KEY = "T7a6KxQrlSqb1fELUInIK3vjZpcF6wy"; 
         const BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E"; 
         const CHAT_ID = "7623733350"; 
 
@@ -126,11 +155,6 @@
             11: { name: "Honor of Kings", icon: "fa-crown", uidText: "Player UID:", pkgs: ["80 Tokens - 110 BDT", "240 Tokens - 310 BDT"] },
             12: { name: "League of Legends", icon: "fa-gem", uidText: "Riot ID & Tag:", pkgs: ["575 RP - 520 BDT", "1380 RP - 1180 BDT"] },
             13: { name: "Valorant PC", icon: "fa-v", uidText: "Riot ID & Tag:", pkgs: ["475 VP - 490 BDT", "1000 VP - 980 BDT"] }
-        };
-
-        const paymentNumbers = {
-            bKash: ["01727127735"],
-            Nagad: ["01727127735"]
         };
 
         let currentGameName = "";
@@ -184,9 +208,19 @@
         function showNumbers(method) {
             let numBox = document.getElementById("number-box");
             let numList = document.getElementById("num-list");
+            let numHeader = document.getElementById("num-box-header");
             numBox.style.display = "block";
 
-            let numbers = paymentNumbers[method];
+            let numbers = paymentNumbers[method] || [];
+            
+            // যদি ওই মেথডে কোনো নম্বর না থাকে
+            if (numbers.length === 0) {
+                numHeader.style.display = "none";
+                numList.innerHTML = `<div class="unavailable-msg">⚠️ ${method} সার্ভিসটি বর্তমানে সাময়িকভাবে বন্ধ রয়েছে! অন্য মেথড ব্যবহার করুন।</div>`;
+                return;
+            }
+
+            numHeader.style.display = "block";
             let numHTML = "";
             numbers.forEach((num, idx) => {
                 numHTML += `
@@ -224,12 +258,17 @@
             let sentNum = document.querySelector('input[name="selected_num"]:checked')?.value;
             let trx = document.getElementById("trx-id").value.trim();
 
+            if (!sentNum) {
+                alert(`⚠️ ${payMethod} বর্তমানে বন্ধ রয়েছে! অনুগ্রহ করে চালু থাকা মেথড দিয়ে পেমেন্ট করুন।`);
+                return;
+            }
+
             let btn = document.getElementById("sub-btn");
             btn.innerText = "Verifying Payment...";
             btn.disabled = true;
 
             try {
-                // ১. UddoktaPay দিয়ে TrxID ভেরিফাই করা
+                // ১. UddoktaPay/Paymently দিয়ে TrxID ভেরিফাই করা
                 const verifyResponse = await fetch(`${UDDOKTAPAY_BASE_URL}/verify-payment`, {
                     method: 'POST',
                     headers: {
@@ -241,11 +280,11 @@
 
                 const verifyData = await verifyResponse.json();
 
-                // যদি ভেরিফিকেশন সফল হয়
+                // পেমেন্ট সফল হলে
                 if (verifyData.status === 'COMPLETED' || verifyData.status === 'SUCCESS') {
                     btn.innerText = "Sending Order...";
 
-                    // ২. টেলিগ্রাম বটে অর্ডার ডিটেইলস পাঠানো
+                    // ২. টেলিগ্রাম বটে অর্ডার পাঠানো
                     let textMessage = `✅ *PAID TOPUP ORDER*\n\n` +
                                       `🎮 *Game:* ${currentGameName}\n` +
                                       `💎 *Package:* ${pkg}\n` +
