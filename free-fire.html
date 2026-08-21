@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free Fire Top Up - XRIYAN HUB</title>
+
+    <script>
+        // ========================================================
+        // ⚡ ACTIVE OFFERINGS (দাম ও প্যাকেজ পরিবর্তন করার জায়গা)
+        // ========================================================
+        const N1="115 Diamonds";   const P1=80;
+        const N2="240 Diamonds";   const P2=160;
+        const N3="610 Diamonds";   const P3=420;
+        const N4="Weekly Membership"; const P4=165;
+        const N5="Monthly Membership"; const P5=750;
+        const N6="Level Up Pass";  const P6=190;
+
+        // ========================================================
+        // ⏳ VAULT / UPCOMING PACKS (ভবিষ্যতে চালু করতে // মুছে দিন)
+        // ========================================================
+        // const N7="Evo Pass";       const P7=280;
+        // const N8="Item 8";         const P8=0;
+        // const N9="Item 9";         const P9=0;
+        // const N10="Item 10";       const P10=0;
+    </script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #0f172a; color: #ffffff; padding-bottom: 50px; }
@@ -39,25 +60,31 @@
         <div class="banner">🔥 FREE FIRE 🔥</div>
 
         <h3 class="section-title">১. প্যাকেজ নির্বাচন করুন</h3>
-        <div class="grid">
-            <div class="card" onclick="selectPackage(this, '115 Diamonds', '80 BDT')">
-                <h4>115 Diamonds</h4><p>80 BDT</p>
-            </div>
-            <div class="card" onclick="selectPackage(this, '240 Diamonds', '160 BDT')">
-                <h4>240 Diamonds</h4><p>160 BDT</p>
-            </div>
-            <div class="card" onclick="selectPackage(this, '610 Diamonds', '420 BDT')">
-                <h4>610 Diamonds</h4><p>420 BDT</p>
-            </div>
-            <div class="card" onclick="selectPackage(this, 'Weekly Membership', '165 BDT')">
-                <h4>Weekly Membership</h4><p>165 BDT</p>
-            </div>
-            <div class="card" onclick="selectPackage(this, 'Monthly Membership', '750 BDT')">
-                <h4>Monthly Membership</h4><p>750 BDT</p>
-            </div>
-            <div class="card" onclick="selectPackage(this, 'Level Up Pass', '190 BDT')">
-                <h4>Level Up Pass</h4><p>190 BDT</p>
-            </div>
+        <div class="grid" id="package-grid">
+            <!-- জাভাস্ক্রিপ্ট অটোমেটিক এখানে প্যাকেজ বানাবে -->
+            <script>
+                function renderCard(name, price) {
+                    if (typeof name !== 'undefined' && typeof price !== 'undefined') {
+                        document.write(`
+                            <div class="card" onclick="selectPackage(this, '${name}', '${price} BDT')">
+                                <h4>${name}</h4>
+                                <p>${price} BDT</p>
+                            </div>
+                        `);
+                    }
+                }
+
+                if (typeof N1 !== 'undefined') renderCard(N1, P1);
+                if (typeof N2 !== 'undefined') renderCard(N2, P2);
+                if (typeof N3 !== 'undefined') renderCard(N3, P3);
+                if (typeof N4 !== 'undefined') renderCard(N4, P4);
+                if (typeof N5 !== 'undefined') renderCard(N5, P5);
+                if (typeof N6 !== 'undefined') renderCard(N6, P6);
+                if (typeof N7 !== 'undefined') renderCard(N7, P7);
+                if (typeof N8 !== 'undefined') renderCard(N8, P8);
+                if (typeof N9 !== 'undefined') renderCard(N9, P9);
+                if (typeof N10 !== 'undefined') renderCard(N10, P10);
+            </script>
         </div>
 
         <h3 class="section-title">২. প্লেয়ার তথ্য দিন</h3>
