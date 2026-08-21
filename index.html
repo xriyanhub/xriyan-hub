@@ -52,7 +52,7 @@
         .close-btn { position: absolute; top: 12px; right: 15px; font-size: 24px; color: #94a3b8; cursor: pointer; font-weight: bold; }
         .sec-title { color: #38bdf8; font-size: 16px; margin: 15px 0 10px 0; font-weight: bold; }
 
-        .pkg-radio, .pay-radio { display: none; }
+        .pkg-radio, .pay-radio, .num-radio { display: none; }
 
         .pkg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .pkg-card-item {
@@ -109,6 +109,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid #334155;
+            cursor: pointer;
+        }
+
+        .num-radio:checked + .num-item {
+            border-color: #22c55e;
+            background: #052e16;
         }
 
         .btn-copy {
@@ -155,36 +162,38 @@
         </div>
     </div>
 
-    <!-- FREE FIRE MODAL (1) -->
+    <!-- REUSABLE GAME FORM TEMPLATES -->
+
+    <!-- FREE FIRE (1) -->
     <input type="checkbox" id="game-1" class="modal-toggle">
     <div class="modal-overlay">
         <div class="modal-content">
             <label for="game-1" class="close-btn">&times;</label>
             <h3 style="color:#38bdf8; font-size:20px; margin-bottom:10px;">Free Fire Topup</h3>
             
-            <form onsubmit="sendTelegramOrder(event, 'Free Fire', 'ff_pkg', 'ff_uid', 'ff_pay', 'ff_trx', 'game-1')">
+            <form onsubmit="sendTelegramOrder(event, 'Free Fire', 'g1_pkg', 'g1_uid', 'g1_pay', 'g1_num', 'g1_trx', 'game-1')">
                 <h4 class="sec-title">১. প্যাকেজ নির্বাচন করুন</h4>
                 <div class="pkg-grid">
-                    <input type="radio" id="g1-p1" name="ff_pkg" value="115 Diamonds - 80 BDT" class="pkg-radio" required>
+                    <input type="radio" id="g1-p1" name="g1_pkg" value="115 Diamonds - 80 BDT" class="pkg-radio" required>
                     <label for="g1-p1" class="pkg-card-item"><h4>115 Diamonds</h4><p>80 BDT</p></label>
 
-                    <input type="radio" id="g1-p2" name="ff_pkg" value="240 Diamonds - 160 BDT" class="pkg-radio">
+                    <input type="radio" id="g1-p2" name="g1_pkg" value="240 Diamonds - 160 BDT" class="pkg-radio">
                     <label for="g1-p2" class="pkg-card-item"><h4>240 Diamonds</h4><p>160 BDT</p></label>
 
-                    <input type="radio" id="g1-p3" name="ff_pkg" value="610 Diamonds - 420 BDT" class="pkg-radio">
+                    <input type="radio" id="g1-p3" name="g1_pkg" value="610 Diamonds - 420 BDT" class="pkg-radio">
                     <label for="g1-p3" class="pkg-card-item"><h4>610 Diamonds</h4><p>420 BDT</p></label>
 
-                    <input type="radio" id="g1-p4" name="ff_pkg" value="Weekly Membership - 165 BDT" class="pkg-radio">
+                    <input type="radio" id="g1-p4" name="g1_pkg" value="Weekly Pass - 165 BDT" class="pkg-radio">
                     <label for="g1-p4" class="pkg-card-item"><h4>Weekly Pass</h4><p>165 BDT</p></label>
                 </div>
 
                 <h4 class="sec-title">২. প্লেয়ার তথ্য দিন</h4>
                 <label class="form-label">Player ID (UID):</label>
-                <input type="text" id="ff_uid" class="form-input" placeholder="Ex: 123456789" required>
+                <input type="text" id="g1_uid" class="form-input" placeholder="Ex: 123456789" required>
 
                 <h4 class="sec-title">৩. পেমেন্ট পদ্ধতি</h4>
-                <input type="radio" id="g1-bkash" name="ff_pay" value="bKash" class="pay-radio bkash-radio" required>
-                <input type="radio" id="g1-nagad" name="ff_pay" value="Nagad" class="pay-radio nagad-radio">
+                <input type="radio" id="g1-bkash" name="g1_pay" value="bKash" class="pay-radio bkash-radio" required>
+                <input type="radio" id="g1-nagad" name="g1_pay" value="Nagad" class="pay-radio nagad-radio">
 
                 <div class="pay-grid">
                     <label for="g1-bkash" class="pay-card-item">bKash</label>
@@ -192,46 +201,53 @@
                 </div>
 
                 <div class="pay-details-bkash num-box">
-                    <p>bKash Personal Send Money:</p>
-                    <div class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button></div>
-                    <div class="num-item"><span>01727127735</span> <button type="button" class="btn-copy" onclick="copyText('01727127735', this)"><i class="fa-regular fa-copy"></i> Copy</button></div>
-                </div>
-                <div class="pay-details-nagad num-box">
-                    <p>Nagad Personal Send Money:</p>
-                    <div class="num-item"><span>01804334909</span> <button type="button" class="btn-copy" onclick="copyText('01804334909', this)"><i class="fa-regular fa-copy"></i> Copy</button></div>
-                    <div class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                    <p>নম্বর সিলেক্ট করে টাকা পাঠান:</p>
+                    <input type="radio" id="g1-b1" name="g1_num" value="01602543660 (bKash)" class="num-radio">
+                    <label for="g1-b1" class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this, 'g1-b1')"><i class="fa-regular fa-copy"></i> Copy</button></label>
+
+                    <input type="radio" id="g1-b2" name="g1_num" value="01727127735 (bKash)" class="num-radio">
+                    <label for="g1-b2" class="num-item"><span>01727127735</span> <button type="button" class="btn-copy" onclick="copyText('01727127735', this, 'g1-b2')"><i class="fa-regular fa-copy"></i> Copy</button></label>
                 </div>
 
-                <label class="form-label">পেমেন্ট নম্বর ও TrxID:</label>
-                <input type="text" id="ff_trx" class="form-input" placeholder="Ex: 017... / TrxID" required>
+                <div class="pay-details-nagad num-box">
+                    <p>নম্বর সিলেক্ট করে টাকা পাঠান:</p>
+                    <input type="radio" id="g1-n1" name="g1_num" value="01804334909 (Nagad)" class="num-radio">
+                    <label for="g1-n1" class="num-item"><span>01804334909</span> <button type="button" class="btn-copy" onclick="copyText('01804334909', this, 'g1-n1')"><i class="fa-regular fa-copy"></i> Copy</button></label>
+
+                    <input type="radio" id="g1-n2" name="g1_num" value="01602543660 (Nagad)" class="num-radio">
+                    <label for="g1-n2" class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this, 'g1-n2')"><i class="fa-regular fa-copy"></i> Copy</button></label>
+                </div>
+
+                <label class="form-label">আপনার পেমেন্ট নম্বর ও TrxID:</label>
+                <input type="text" id="g1_trx" class="form-input" placeholder="Ex: 017... / TrxID: AB123" required>
                 <button type="submit" class="btn-submit">BUY NOW (অর্ডার করুন)</button>
             </form>
         </div>
     </div>
 
-    <!-- PUBG MOBILE MODAL (2) -->
+    <!-- PUBG MOBILE (2) -->
     <input type="checkbox" id="game-2" class="modal-toggle">
     <div class="modal-overlay">
         <div class="modal-content">
             <label for="game-2" class="close-btn">&times;</label>
             <h3 style="color:#38bdf8; font-size:20px; margin-bottom:10px;">PUBG Mobile Topup</h3>
-            <form onsubmit="sendTelegramOrder(event, 'PUBG Mobile', 'pubg_pkg', 'pubg_uid', 'pubg_pay', 'pubg_trx', 'game-2')">
+            <form onsubmit="sendTelegramOrder(event, 'PUBG Mobile', 'g2_pkg', 'g2_uid', 'g2_pay', 'g2_num', 'g2_trx', 'game-2')">
                 <h4 class="sec-title">১. প্যাকেজ নির্বাচন করুন</h4>
                 <div class="pkg-grid">
-                    <input type="radio" id="g2-p1" name="pubg_pkg" value="60 UC - 95 BDT" class="pkg-radio" required>
+                    <input type="radio" id="g2-p1" name="g2_pkg" value="60 UC - 95 BDT" class="pkg-radio" required>
                     <label for="g2-p1" class="pkg-card-item"><h4>60 UC</h4><p>95 BDT</p></label>
 
-                    <input type="radio" id="g2-p2" name="pubg_pkg" value="325 UC - 440 BDT" class="pkg-radio">
+                    <input type="radio" id="g2-p2" name="g2_pkg" value="325 UC - 440 BDT" class="pkg-radio">
                     <label for="g2-p2" class="pkg-card-item"><h4>325 UC</h4><p>440 BDT</p></label>
                 </div>
 
                 <h4 class="sec-title">২. প্লেয়ার তথ্য দিন</h4>
                 <label class="form-label">Character ID (UID):</label>
-                <input type="text" id="pubg_uid" class="form-input" placeholder="Ex: 512345678" required>
+                <input type="text" id="g2_uid" class="form-input" placeholder="Ex: 512345678" required>
 
                 <h4 class="sec-title">৩. পেমেন্ট পদ্ধতি</h4>
-                <input type="radio" id="g2-bkash" name="pubg_pay" value="bKash" class="pay-radio bkash-radio" required>
-                <input type="radio" id="g2-nagad" name="pubg_pay" value="Nagad" class="pay-radio nagad-radio">
+                <input type="radio" id="g2-bkash" name="g2_pay" value="bKash" class="pay-radio bkash-radio" required>
+                <input type="radio" id="g2-nagad" name="g2_pay" value="Nagad" class="pay-radio nagad-radio">
 
                 <div class="pay-grid">
                     <label for="g2-bkash" class="pay-card-item">bKash</label>
@@ -239,97 +255,89 @@
                 </div>
 
                 <div class="pay-details-bkash num-box">
-                    <p>bKash Personal Send Money:</p>
-                    <div class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this)"><i class="fa-regular fa-copy"></i> Copy</button></div>
-                </div>
-                <div class="pay-details-nagad num-box">
-                    <p>Nagad Personal Send Money:</p>
-                    <div class="num-item"><span>01804334909</span> <button type="button" class="btn-copy" onclick="copyText('01804334909', this)"><i class="fa-regular fa-copy"></i> Copy</button></div>
+                    <p>নম্বর সিলেক্ট করে টাকা পাঠান:</p>
+                    <input type="radio" id="g2-b1" name="g2_num" value="01602543660 (bKash)" class="num-radio">
+                    <label for="g2-b1" class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this, 'g2-b1')"><i class="fa-regular fa-copy"></i> Copy</button></label>
+
+                    <input type="radio" id="g2-b2" name="g2_num" value="01727127735 (bKash)" class="num-radio">
+                    <label for="g2-b2" class="num-item"><span>01727127735</span> <button type="button" class="btn-copy" onclick="copyText('01727127735', this, 'g2-b2')"><i class="fa-regular fa-copy"></i> Copy</button></label>
                 </div>
 
-                <label class="form-label">পেমেন্ট নম্বর ও TrxID:</label>
-                <input type="text" id="pubg_trx" class="form-input" placeholder="Ex: 017... / TrxID" required>
+                <div class="pay-details-nagad num-box">
+                    <p>নম্বর সিলেক্ট করে টাকা পাঠান:</p>
+                    <input type="radio" id="g2-n1" name="g2_num" value="01804334909 (Nagad)" class="num-radio">
+                    <label for="g2-n1" class="num-item"><span>01804334909</span> <button type="button" class="btn-copy" onclick="copyText('01804334909', this, 'g2-n1')"><i class="fa-regular fa-copy"></i> Copy</button></label>
+
+                    <input type="radio" id="g2-n2" name="g2_num" value="01602543660 (Nagad)" class="num-radio">
+                    <label for="g2-n2" class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this, 'g2-n2')"><i class="fa-regular fa-copy"></i> Copy</button></label>
+                </div>
+
+                <label class="form-label">আপনার পেমেন্ট নম্বর ও TrxID:</label>
+                <input type="text" id="g2_trx" class="form-input" placeholder="Ex: 017... / TrxID" required>
                 <button type="submit" class="btn-submit">BUY NOW (অর্ডার করুন)</button>
             </form>
         </div>
     </div>
 
-    <!-- OTHER MODALS -->
-    <input type="checkbox" id="game-3" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-3" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Mobile Legends</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-4" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-4" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Brawl Stars</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-5" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-5" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Clash of Clans</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-6" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-6" class="close-btn">&times;</label><h3 style="color:#38bdf8;">FC Mobile</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-7" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-7" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Call of Duty</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-8" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-8" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Counter Strike 2</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-9" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-9" class="close-btn">&times;</label><h3 style="color:#38bdf8;">eFootball</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-10" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-10" class="close-btn">&times;</label><h3 style="color:#38bdf8;">GTA V Online</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-11" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-11" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Honor of Kings</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-12" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-12" class="close-btn">&times;</label><h3 style="color:#38bdf8;">League of Legends</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
-    <input type="checkbox" id="game-13" class="modal-toggle"><div class="modal-overlay"><div class="modal-content"><label for="game-13" class="close-btn">&times;</label><h3 style="color:#38bdf8;">Valorant PC</h3><p style="margin:20px 0;">Topup services coming soon!</p></div></div>
+    <!-- MOBILE LEGENDS (3) -->
+    <input type="checkbox" id="game-3" class="modal-toggle">
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <label for="game-3" class="close-btn">&times;</label>
+            <h3 style="color:#38bdf8; font-size:20px; margin-bottom:10px;">Mobile Legends Topup</h3>
+            <form onsubmit="sendTelegramOrder(event, 'Mobile Legends', 'g3_pkg', 'g3_uid', 'g3_pay', 'g3_num', 'g3_trx', 'game-3')">
+                <h4 class="sec-title">১. প্যাকেজ নির্বাচন করুন</h4>
+                <div class="pkg-grid">
+                    <input type="radio" id="g3-p1" name="g3_pkg" value="86 Diamonds - 130 BDT" class="pkg-radio" required>
+                    <label for="g3-p1" class="pkg-card-item"><h4>86 Diamonds</h4><p>130 BDT</p></label>
 
-    <script>
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.ready();
-            window.Telegram.WebApp.expand();
-        }
+                    <input type="radio" id="g3-p2" name="g3_pkg" value="172 Diamonds - 250 BDT" class="pkg-radio">
+                    <label for="g3-p2" class="pkg-card-item"><h4>172 Diamonds</h4><p>250 BDT</p></label>
+                </div>
 
-        function copyText(num, btn) {
-            navigator.clipboard.writeText(num).then(() => {
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                btn.style.background = '#22c55e';
-                btn.style.color = '#fff';
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
-                    btn.style.background = '#38bdf8';
-                    btn.style.color = '#0f172a';
-                }, 2000);
-            });
-        }
+                <h4 class="sec-title">২. প্লেয়ার তথ্য দিন</h4>
+                <label class="form-label">User ID & Zone ID:</label>
+                <input type="text" id="g3_uid" class="form-input" placeholder="Ex: 12345678 (1234)" required>
 
-        const BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E"; 
-        const CHAT_ID = "7623733350"; // আপনার অরিজিনাল ইউজার আইডি
+                <h4 class="sec-title">৩. পেমেন্ট পদ্ধতি</h4>
+                <input type="radio" id="g3-bkash" name="g3_pay" value="bKash" class="pay-radio bkash-radio" required>
+                <input type="radio" id="g3-nagad" name="g3_pay" value="Nagad" class="pay-radio nagad-radio">
 
-        function sendTelegramOrder(e, gameName, pkgName, uidId, payName, trxId, modalId) {
-            e.preventDefault();
+                <div class="pay-grid">
+                    <label for="g3-bkash" class="pay-card-item">bKash</label>
+                    <label for="g3-nagad" class="pay-card-item">Nagad</label>
+                </div>
 
-            let btn = e.target.querySelector('button[type="submit"]');
-            btn.innerText = "Processing...";
-            btn.disabled = true;
+                <div class="pay-details-bkash num-box">
+                    <p>নম্বর সিলেক্ট করে টাকা পাঠান:</p>
+                    <input type="radio" id="g3-b1" name="g3_num" value="01602543660 (bKash)" class="num-radio">
+                    <label for="g3-b1" class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this, 'g3-b1')"><i class="fa-regular fa-copy"></i> Copy</button></label>
 
-            let pkg = document.querySelector(`input[name="${pkgName}"]:checked`).value;
-            let uid = document.getElementById(uidId).value;
-            let payMethod = document.querySelector(`input[name="${payName}"]:checked`).value;
-            let trx = document.getElementById(trxId).value;
+                    <input type="radio" id="g3-b2" name="g3_num" value="01727127735 (bKash)" class="num-radio">
+                    <label for="g3-b2" class="num-item"><span>01727127735</span> <button type="button" class="btn-copy" onclick="copyText('01727127735', this, 'g3-b2')"><i class="fa-regular fa-copy"></i> Copy</button></label>
+                </div>
 
-            let textMessage = `🛒 *NEW TOPUP ORDER*%0A%0A` +
-                              `🎮 *Game:* ${gameName}%0A` +
-                              `💎 *Package:* ${pkg}%0A` +
-                              `🆔 *Player ID:* ${uid}%0A` +
-                              `💳 *Payment Method:* ${payMethod}%0A` +
-                              `📝 *TrxID/Number:* ${trx}`;
+                <div class="pay-details-nagad num-box">
+                    <p>নম্বর সিলেক্ট করে টাকা পাঠান:</p>
+                    <input type="radio" id="g3-n1" name="g3_num" value="01804334909 (Nagad)" class="num-radio">
+                    <label for="g3-n1" class="num-item"><span>01804334909</span> <button type="button" class="btn-copy" onclick="copyText('01804334909', this, 'g3-n1')"><i class="fa-regular fa-copy"></i> Copy</button></label>
 
-            let url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${textMessage}&parse_mode=Markdown`;
+                    <input type="radio" id="g3-n2" name="g3_num" value="01602543660 (Nagad)" class="num-radio">
+                    <label for="g3-n2" class="num-item"><span>01602543660</span> <button type="button" class="btn-copy" onclick="copyText('01602543660', this, 'g3-n2')"><i class="fa-regular fa-copy"></i> Copy</button></label>
+                </div>
 
-            fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
-                    document.getElementById(modalId).checked = false; // পপআপ বন্ধ হয়ে যাবে
-                    e.target.reset(); // ফর্ম ফাঁকা হয়ে যাবে
-                } else {
-                    alert("❌ এরর: " + data.description);
-                }
-            })
-            .catch(error => {
-                alert("❌ নেটওয়ার্ক এরর! আবার চেষ্টা করুন।");
-            })
-            .finally(() => {
-                btn.innerText = "BUY NOW (অর্ডার করুন)";
-                btn.disabled = false;
-            });
-        }
-    </script>
-</body>
-    </html>
-    
+                <label class="form-label">আপনার পেমেন্ট নম্বর ও TrxID:</label>
+                <input type="text" id="g3_trx" class="form-input" placeholder="Ex: 017... / TrxID" required>
+                <button type="submit" class="btn-submit">BUY NOW (অর্ডার করুন)</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- BRAWL STARS (4) -->
+    <input type="checkbox" id="game-4" class="modal-toggle">
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <label for="game-4" class="close-btn">&times;</label>
+            <h3 style="color:#38bdf8; font-size:20px; margin-bottom:10px;">Brawl Stars Topup</h3>
+            <form onsubmit="sendTelegramOrder(event, 'Brawl Stars', 'g4_pkg', 'g4_uid', 'g4_pay', 'g4_num', 'g4_trx', 'game-4')">
+                <h4 class="sec-title">১. প্যাকেজ নির্বাচন করুন<
