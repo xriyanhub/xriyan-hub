@@ -113,7 +113,7 @@
         }
 
         // ==========================================
-        // 💳 পেমেন্ট নম্বর কনফিগারেশন (এখানে পরিবর্তন করবেন)
+        // 💳 পেমেন্ট নম্বর কনফিগারেশন
         // ==========================================
         const paymentNumbers = {
             bKash: [
@@ -171,9 +171,14 @@
             `;
         });
 
+        // গেমে ক্লিক করলে
         function openGameOffer(id) {
             let g = gamesData[id];
             currentGameName = g.name;
+            
+            // রিফ্রেশ দিয়ে যাতে এই পেজটি মনে থাকে
+            localStorage.setItem("selected_game_id", id);
+
             document.getElementById("selected-game-title").innerText = g.name + " Topup";
             document.getElementById("uid-label").innerText = g.uidText;
 
@@ -196,14 +201,24 @@
             document.getElementById("offer-page").style.display = "block";
             document.getElementById("btn-home").style.display = "block";
             document.getElementById("number-box").style.display = "none";
-            document.getElementById("order-form").reset();
         }
 
+        // হোম পেজে ফিরে যাওয়ার ফাংশন
         function goHome() {
+            localStorage.removeItem("selected_game_id"); // হোম পেজে গেলে সেভ ডাটা মুছে ফেলবে
             document.getElementById("home-page").style.display = "block";
             document.getElementById("offer-page").style.display = "none";
             document.getElementById("btn-home").style.display = "none";
+            document.getElementById("order-form").reset();
         }
+
+        // 🔄 রিফ্রেশ দিলে আগের অবস্থায় ফিরিয়ে আনার লজিক
+        window.addEventListener("DOMContentLoaded", () => {
+            let savedGameId = localStorage.getItem("selected_game_id");
+            if (savedGameId && gamesData[savedGameId]) {
+                openGameOffer(savedGameId);
+            }
+        });
 
         function showNumbers(method) {
             let numBox = document.getElementById("number-box");
@@ -213,7 +228,6 @@
 
             let numbers = paymentNumbers[method] || [];
             
-            // যদি ওই মেথডে কোনো নম্বর না থাকে
             if (numbers.length === 0) {
                 numHeader.style.display = "none";
                 numList.innerHTML = `<div class="unavailable-msg">⚠️ ${method} সার্ভিসটি বর্তমানে সাময়িকভাবে বন্ধ রয়েছে! অন্য মেথড ব্যবহার করুন।</div>`;
@@ -308,8 +322,6 @@
 
                     if (tgData.ok) {
                         alert("🎉 পেমেন্ট সফলভাবে ভেরিফাই করা হয়েছে এবং অর্ডার জমা পড়েছে!");
-                        document.getElementById("order-form").reset();
-                        document.getElementById("number-box").style.display = "none";
                         goHome();
                     } else {
                         alert("❌ অর্ডার টেলিগ্রামে পাঠাতে সমস্যা হয়েছে।");
@@ -327,4 +339,5 @@
         }
     </script>
 </body>
-</html>
+                    </html>
+                    
