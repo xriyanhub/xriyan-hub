@@ -67,7 +67,7 @@
         .cart-item-details { font-size: 13px; color: #cbd5e1; margin-top: 3px; display: flex; justify-content: space-between; }
         .btn-remove-item { position: absolute; right: 10px; top: 10px; color: #ef4444; cursor: pointer; font-size: 14px; }
 
-        /* 🔻 STICKY BOTTOM CART BAR (টেলিগ্রামের সেইম একদম নিচে লেগে থাকা বার) 🔻 */
+        /* 🔻 STICKY BOTTOM CART BAR 🔻 */
         .sticky-cart-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 2px solid #38bdf8; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; z-index: 999; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5); }
         .cart-info { display: flex; flex-direction: column; }
         .cart-count-text { font-size: 12px; color: #94a3b8; }
@@ -173,35 +173,12 @@
         const paymentNumbers = {
             bKash: [
                 // { num: "01700000001", type: "Send Money" },
-                // { num: "01700000002", type: "Send Money" },
-                // { num: "01700000003", type: "Send Money" },
-                // { num: "01700000004", type: "Send Money" },
-                // { num: "01700000005", type: "Send Money" },
-                // { num: "01700000006", type: "Send Money" },
-                // { num: "01700000007", type: "Send Money" },
-                // { num: "01700000008", type: "Send Money" },
-                // { num: "01700000009", type: "Send Money" },
-                // { num: "01700000010", type: "Send Money" }
             ],
             Nagad: [
                 { num: "01804334909", type: "Send Money" },
-                // { num: "01800000001", type: "Cash Out" },
-                // { num: "01800000002", type: "Payment" },
-                // { num: "01800000003", type: "Send Money" },
-                // { num: "01800000004", type: "Send Money" },
-                // { num: "01800000005", type: "Send Money" }
             ],
             Rocket: [
                 // { num: "01900000001", type: "Cash Out" },
-                // { num: "01900000002", type: "Send Money" },
-                // { num: "01900000003", type: "Send Money" },
-                // { num: "01900000004", type: "Send Money" },
-                // { num: "01900000005", type: "Send Money" },
-                // { num: "01900000006", type: "Send Money" },
-                // { num: "01900000007", type: "Send Money" },
-                // { num: "01900000008", type: "Send Money" },
-                // { num: "01900000009", type: "Send Money" },
-                // { num: "01900000010", type: "Send Money" }
             ]
         };
 
@@ -228,7 +205,7 @@
 
         let currentGameName = "";
         
-        // 🛒 LocalStorage থেকে সেভ করা কার্ট লোড করা (যাতে রিফ্রেশ করলেও কার্ট জিরো না হয়)
+        // 🛒 LocalStorage ব্যবহার করা হয়েছে যাতে রিফ্রেশ বা অ্যাপ ক্লোজ করলেও কার্ট সেভ থাকে
         let cart = JSON.parse(localStorage.getItem("xriyan_cart")) || [];
 
         const gameListContainer = document.getElementById("game-list");
@@ -245,6 +222,9 @@
         function openGameOffer(id) {
             let g = gamesData[id];
             currentGameName = g.name;
+
+            // 💡 sessionStorage ব্যবহার করা হয়েছে: রিফ্রেশ দিলে পেজ সেভ থাকবে, কিন্তু ক্লোজ করে নতুন করে খুললে এটি রিসেট হয়ে হোম পেজ আসবে।
+            sessionStorage.setItem("active_game_id", id);
 
             document.getElementById("selected-game-title").innerText = g.name + " Topup";
             document.getElementById("uid-label").innerText = g.uidText;
@@ -270,6 +250,7 @@
         }
 
         function goHome() {
+            sessionStorage.removeItem("active_game_id");
             document.getElementById("home-page").style.display = "block";
             document.getElementById("offer-page").style.display = "none";
             document.getElementById("btn-home").style.display = "none";
@@ -278,9 +259,15 @@
         }
 
         window.addEventListener("DOMContentLoaded", () => {
-            // ১. অ্যাপ ক্লোজ করে আবার ওপেন করলে সবসময় Home (১ম) পেজ থেকে শুরু হবে।
-            goHome();
-            // ২. রিফ্রেশ দিলেও কার্ট এর আইটেম বজায় রাখতে আপডেট ফাংশন কল করা
+            // রিফ্রেশ দেওয়া হলে একই গেম পেজ ওপেন রাখা
+            let savedGameId = sessionStorage.getItem("active_game_id");
+            if (savedGameId && gamesData[savedGameId]) {
+                openGameOffer(savedGameId);
+            } else {
+                goHome();
+            }
+            
+            // রিফ্রেশ দিলেও কার্ট আপডেট রাখার জন্য
             updateStickyBar();
         });
 
