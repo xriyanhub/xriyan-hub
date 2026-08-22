@@ -148,7 +148,7 @@
             window.Telegram.WebApp.expand();
         }
 
-        // 💳 পেমেন্ট নম্বর কনফিগারেশন (আপনার চাহিদা অনুযায়ী ৪-৫ টা করে // দিয়ে দেওয়া হলো)
+        // 💳 পেমেন্ট নম্বর কনফিগারেশন 
         const paymentNumbers = {
             bKash: [
                 // "01700000000",
@@ -377,7 +377,7 @@
 
                     let orderID = "ORD" + Math.floor(100000 + Math.random() * 900000);
 
-                    // 📩 টেলিগ্রাম বটে বিস্তারিত মেসেজ ফরম্যাট
+                    // 📩 টেলিগ্রাম বটে বিস্তারিত মেসেজ ফরম্যাট (Re-order & Refund ডাটা সহ)
                     let textMessage = `📩 *NEW ORDER CREATED*\n` +
                                       `🆔 *Order ID:* \`${orderID}\`\n` +
                                       `🎮 *Game:* ${currentGameName}\n` +
@@ -386,8 +386,12 @@
                                       `💳 *Payment Method:* ${payMethod}\n` +
                                       `📲 *Sent Money To:* ${sentNum}\n` +
                                       `📝 *Verified TrxID:* \`${trx}\`\n` +
-                                      `💰 *Paid Amount:* $${verifyData.amount || 'Verified'} BDT\n` +
-                                      `⏳ *Status:* Pending (In Processing)`;
+                                      `💰 *Paid Amount:* ${verifyData.amount || 'Verified'} BDT\n` +
+                                      `⏳ *Status:* Pending (In Processing)\n\n` +
+                                      `🔄 *Re-order & Refund Info:*\n` +
+                                      `• Game: ${currentGameName}\n` +
+                                      `• Package: ${selectedPkgData}\n` +
+                                      `• Target ID: \`${currentUIDData}\``;
 
                     const tgRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                         method: 'POST',
@@ -402,7 +406,7 @@
                     const tgData = await tgRes.json();
 
                     if (tgData.ok) {
-                        alert("🎉 পেমেন্ট সফল হয়েছে এবং অর্ডার পাঠিয়ে দেওয়া হয়েছে!");
+                        alert("🎉 পেমেন্ট সফল হয়েছে এবং অর্ডার বানিয়ে দেওয়া হয়েছে!");
                         goHome();
                     } else {
                         alert("❌ অর্ডার টেলিগ্রামে পাঠাতে সমস্যা হয়েছে।");
