@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cache Control -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>XRIYAN HUB - Free Fire Topup</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
@@ -52,7 +56,7 @@
 
             <div class="sub-title">১. প্যাকেজ নির্বাচন করুন</div>
             
-            <!-- ALL PACKAGES MANUAL GRID -->
+            <!-- ALL PACKAGES GRID -->
             <div class="grid">
                 <!-- Memberships -->
                 <div class="card" onclick="selectPack('Weekly', 156, this)"><h4>Weekly</h4><p>156 BDT</p></div>
@@ -85,7 +89,7 @@
                 <div class="card" onclick="selectPack('5x Weekly', 785, this)"><h4>5x Weekly</h4><p>785 BDT</p></div>
                 <div class="card" onclick="selectPack('2x Monthly', 1595, this)"><h4>2x Monthly</h4><p>1595 BDT</p></div>
 
-                <!-- Extra / Stock Out -->
+                <!-- Stock Out Packs -->
                 <div class="card stock-out"><h4>Level Up Pass</h4><p style="color: #ef4444;">Stock Out</p></div>
                 <div class="card stock-out"><h4>Evo Pass</h4><p style="color: #ef4444;">Stock Out</p></div>
             </div>
@@ -131,12 +135,12 @@
             
             document.getElementById('cart-count').innerText = cartItems + (cartItems > 1 ? " Orders" : " Order");
             document.getElementById('cart-total').innerText = cartTotal + " BDT";
-            alert(`${currentSelected.name} সফলভাবে কার্টে যোগ হয়েছে!`);
+            alert(`${currentSelected.name} সফলভাবে যোগ করা হয়েছে!`);
         }
 
         async function directPay() {
-            const uid = document.getElementById('uid').value;
-            const payInfo = document.getElementById('pay-info').value;
+            const uid = document.getElementById('uid').value.trim();
+            const payInfo = document.getElementById('pay-info').value.trim();
 
             if(!currentSelected && cartTotal === 0) return alert("প্যাকেজ নির্বাচন করুন!");
             if(!uid) return alert("Player ID (UID) দিন!");
@@ -146,12 +150,15 @@
 
             const msg = `🚀 *New Order (XRIYAN HUB)*%0A%0A💎 *Package:* ${itemToSend}%0A💰 *Price:* ${priceToSend} BDT%0A🆔 *UID:* \`${uid}\`%0A💳 *Payment:* \`${payInfo}\``;
 
-            await fetch(`https://api.telegram.org/bot8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E/sendMessage?chat_id=7623733350&text=${msg}&parse_mode=Markdown`);
-
-            alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
-            location.reload();
+            try {
+                await fetch(`https://api.telegram.org/bot8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E/sendMessage?chat_id=7623733350&text=${msg}&parse_mode=Markdown`);
+                alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
+                location.reload();
+            } catch(e) {
+                alert("অর্ডার পাঠাতে সমস্যা হয়েছে। ইন্টারনেট কানেকশন চেক করুন।");
+            }
         }
     </script>
 </body>
-                                                                                                              </html>
-                                                                                                              
+</html>
+    
