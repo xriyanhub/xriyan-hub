@@ -4,50 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XRIYAN HUB - Free Fire Topup</title>
-    
-    <script>
-        // ====================================================================================================
-        // ⚡ RR TOPUP EXACT SERIAL & DISCOUNT PRICES (N1, P1 FORMAT)
-        // ====================================================================================================
-        
-        // --- Memberships ---
-        const N1="Weekly";              const P1=156;
-        const N2="Monthly";             const P2=785;
-
-        // --- Diamonds Serial ---
-        const N3="25 Diamonds";         const P3=21;
-        const N4="50 Diamonds";         const P4=35;
-        const N5="100 Diamonds";        const P5=69;
-        const N6="115 Diamonds";        const P6=78;
-        const N7="240 Diamonds";        const P7=156;
-        const N8="300 Diamonds";        const P8=0;   // Stock Out / Coming Soon
-        const N9="355 Diamonds";        const P9=232;
-        const N10="480 Diamonds";       const P10=311;
-        const N11="505 Diamonds";       const P11=331;
-        const N12="610 Diamonds";       const P12=395;
-        const N13="850 Diamonds";       const P13=553;
-        const N14="1090 Diamonds";      const P14=711;
-        const N15="1240 Diamonds";      const P15=795;
-        const N16="1720 Diamonds";      const P16=1111;
-        const N17="2090 Diamonds";      const P17=1353;
-        const N18="2530 Diamonds";      const P18=1605;
-        const N19="4010 Diamonds";      const P19=2563;
-        const N20="5060 Diamonds";      const P20=3215;
-        const N21="10120 Diamonds";     const P21=6435;
-
-        // --- Combo Memberships ---
-        const N22="2x Weekly";          const P22=311;
-        const N23="3x Weekly";          const P23=469;
-        const N24="5x Weekly";          const P24=785;
-        const N25="2x Monthly";         const P25=1595;
-
-        // --- Upcoming / Extra Slots ---
-        const N26="Level Up Pass";      const P26=0;
-        const N27="Evo Pass";           const P27=0;
-        const N28="AirDrop TopUp";      const P28=0;
-        const N29="Upcoming Offer 1";   const P29=0;
-        const N30="Upcoming Offer 2";   const P30=0;
-    </script>
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
@@ -134,35 +90,73 @@
     </div>
 
     <script>
+        // ========================================================
+        // ⚡ ALL PACKAGES IN RR TOPUP EXACT SERIAL
+        // ========================================================
+        const packs = [
+            // Memberships
+            { n: "Weekly", p: 156 },
+            { n: "Monthly", p: 785 },
+
+            // Diamonds
+            { n: "25 Diamonds", p: 21 },
+            { n: "50 Diamonds", p: 35 },
+            { n: "100 Diamonds", p: 69 },
+            { n: "115 Diamonds", p: 78 },
+            { n: "240 Diamonds", p: 156 },
+            { n: "300 Diamonds", p: 0 }, // Stock Out
+            { n: "355 Diamonds", p: 232 },
+            { n: "480 Diamonds", p: 311 },
+            { n: "505 Diamonds", p: 331 },
+            { n: "610 Diamonds", p: 395 },
+            { n: "850 Diamonds", p: 553 },
+            { n: "1090 Diamonds", p: 711 },
+            { n: "1240 Diamonds", p: 795 },
+            { n: "1720 Diamonds", p: 1111 },
+            { n: "2090 Diamonds", p: 1353 },
+            { n: "2530 Diamonds", p: 1605 },
+            { n: "4010 Diamonds", p: 2563 },
+            { n: "5060 Diamonds", p: 3215 },
+            { n: "10120 Diamonds", p: 6435 },
+
+            // Combo Memberships
+            { n: "2x Weekly", p: 311 },
+            { n: "3x Weekly", p: 469 },
+            { n: "5x Weekly", p: 785 },
+            { n: "2x Monthly", p: 1595 },
+
+            // Upcoming / Extra
+            { n: "Level Up Pass", p: 0 },
+            { n: "Evo Pass", p: 0 },
+            { n: "AirDrop TopUp", p: 0 },
+            { n: "Upcoming Offer 1", p: 0 }
+        ];
+
         let selected = null;
         let cartTotal = 0;
         let cartItems = 0;
 
         const grid = document.getElementById('pack-grid');
 
-        // N1, P1 ভ্যারিয়েবলগুলোর লুপ চালিয়ে কার্ড রেন্ডার করা
-        for (let i = 1; i <= 30; i++) {
-            let name = window['N' + i];
-            let price = window['P' + i];
-
-            if (typeof name !== 'undefined' && typeof price !== 'undefined') {
-                const div = document.createElement('div');
-                
-                if (price > 0) {
-                    div.className = 'card';
-                    div.innerHTML = `<h4>${name}</h4><p>${price} BDT</p>`;
-                    div.onclick = () => {
-                        document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-                        div.classList.add('active');
-                        selected = { n: name, p: price };
-                    };
-                } else {
-                    div.className = 'card upcoming';
-                    div.innerHTML = `<h4>${name}</h4><p style="color: #ff4d4d;">Stock Out</p>`;
-                }
-                grid.appendChild(div);
+        // কার্ড রেন্ডার লজিক
+        packs.forEach(item => {
+            const div = document.createElement('div');
+            
+            if (item.p > 0) {
+                div.className = 'card';
+                div.innerHTML = `<h4>${item.n}</h4><p>${item.p} BDT</p>`;
+                div.onclick = () => {
+                    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+                    div.classList.add('active');
+                    selected = item;
+                };
+            } else {
+                div.className = 'card upcoming';
+                div.innerHTML = `<h4>${item.n}</h4><p style="color: #ff4d4d;">Stock Out</p>`;
             }
-        }
+            
+            grid.appendChild(div);
+        });
 
         function addToCart() {
             if(!selected) return alert("দয়া করে একটি প্যাকেজ নির্বাচন করুন!");
@@ -193,5 +187,4 @@
         }
     </script>
 </body>
-    </html>
-    
+</html>
