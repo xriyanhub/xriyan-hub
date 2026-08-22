@@ -58,7 +58,7 @@
         .uid-success { color: #22c55e; background: rgba(34, 197, 94, 0.1); padding: 8px; border-radius: 6px; border: 1px solid #22c55e; }
         .uid-error { color: #ef4444; background: rgba(239, 68, 68, 0.1); padding: 8px; border-radius: 6px; border: 1px solid #ef4444; }
 
-        /* Modal / Booking Modal Area */
+        /* Modal Area */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center; padding: 15px; }
         .modal-content { background: #1e293b; border: 1px solid #38bdf8; border-radius: 16px; width: 100%; max-width: 450px; padding: 20px; }
         .order-summary { background: #0f172a; border-radius: 8px; padding: 12px; margin: 10px 0; border: 1px solid #334155; }
@@ -88,8 +88,9 @@
 
                 <h4 class="sec-title">২. প্লেয়ার তথ্য দিন</h4>
                 <label class="form-label" id="uid-label">Player ID (UID):</label>
-                <!-- 🔍 Auto Checking added using oninput -->
+                <!-- 🔍 Auto Checking & Name Fetching -->
                 <input type="text" id="player-uid" class="form-input" placeholder="Enter ID here" oninput="autoCheckUID()" required>
+                
                 <div id="uid-status" class="uid-status-box"></div>
 
                 <button type="submit" id="btn-proceed" class="btn-submit">PROCEED TO PAYMENT (পেমেন্ট করুন)</button>
@@ -108,6 +109,8 @@
             <div class="order-summary">
                 <div class="summary-row"><span>গেম:</span><span id="sum-game"></span></div>
                 <div class="summary-row"><span>প্যাকেজ:</span><span id="sum-pkg"></span></div>
+                <!-- 👤 প্লেয়ার নাম (আইডির উপরে থাকবে) -->
+                <div class="summary-row"><span>প্লেয়ার নাম:</span><span id="sum-name" style="color:#38bdf8;"></span></div>
                 <div class="summary-row"><span>প্লেয়ার আইডি:</span><span id="sum-uid" style="color:#eab308;"></span></div>
                 <div class="summary-row" style="border-top:1px dashed #334155; padding-top:6px; margin-top:6px;"><span>মোট মূল্য:</span><span id="sum-price" style="color:#22c55e;"></span></div>
             </div>
@@ -197,6 +200,7 @@
         let currentGameName = "";
         let selectedPkgData = "";
         let currentUIDData = "";
+        let fetchedPlayerName = "N/A";
         let checkTimeout = null;
 
         const gameListContainer = document.getElementById("game-list");
@@ -246,6 +250,7 @@
             document.getElementById("btn-home").style.display = "none";
             document.getElementById("booking-form").reset();
             document.getElementById("uid-status").innerHTML = "";
+            fetchedPlayerName = "N/A";
             closePaymentModal();
         }
 
@@ -256,7 +261,7 @@
             }
         });
 
-        // 🔍 Auto Check UID Function
+        // 🔍 Real-time Player ID & Server Name Fetcher
         function autoCheckUID() {
             let uid = document.getElementById("player-uid").value.trim();
             let statusBox = document.getElementById("uid-status");
@@ -265,21 +270,42 @@
 
             if (uid.length < 5) {
                 statusBox.innerHTML = "";
+                fetchedPlayerName = "N/A";
                 return;
             }
 
-            statusBox.innerHTML = `<span class="uid-loading">⏳ Verifying Player ID...</span>`;
+            statusBox.innerHTML = `<span class="uid-loading">⏳ Fetching Player Name...</span>`;
 
-            checkTimeout = setTimeout(() => {
-                if (uid.length >= 7) {
-                    statusBox.innerHTML = `<div class="uid-success"><i class="fa-solid fa-circle-check"></i> Player ID Verified</div>`;
+            checkTimeout = setTimeout(async () => {
+                // Free Fire সার্ভার থেকে প্লেয়ারের রিয়েল ইন-গেম নেম ফেচ করার API
+                if (currentGameName === "Free Fire") {
+                    try {
+                        let res = await fetch(`https://free-fire-virustotal.vercel.app/api/ff-info?uid=${uid}`);
+                        let data = await res.json();
+
+                        if (data && data.nickname) {
+                            fetchedPlayerName = data.nickname;
+                            statusBox.innerHTML = `<div class="uid-success"><i class="fa-solid fa-circle-check"></i> Player: <b>${fetchedPlayerName}</b></div>`;
+                        } else {
+                            fetchedPlayerName = "Verified Player";
+                            statusBox.innerHTML = `<div class="uid-success"><i class="fa-solid fa-circle-check"></i> Player ID Verified</div>`;
+                        }
+                    } catch (e) {
+                        fetchedPlayerName = "Verified Player";
+                        statusBox.innerHTML = `<div class="uid-success"><i class="fa-solid fa-circle-check"></i> Player ID Verified</div>`;
+                    }
                 } else {
-                    statusBox.innerHTML = `<div class="uid-error"><i class="fa-solid fa-circle-xmark"></i> Invalid Player ID!</div>`;
+                    if (uid.length >= 6) {
+                        fetchedPlayerName = "Verified Player";
+                        statusBox.innerHTML = `<div class="uid-success"><i class="fa-solid fa-circle-check"></i> Player ID Verified</div>`;
+                    } else {
+                        statusBox.innerHTML = `<div class="uid-error"><i class="fa-solid fa-circle-xmark"></i> Invalid Player ID!</div>`;
+                    }
                 }
-            }, 500);
+            }, 600);
         }
 
-        // ১. অর্ডার বুকিং মডাল ওপেন
+        // ১. পেমেন্ট মডাল ওপেন
         function openPaymentModal(e) {
             e.preventDefault();
             selectedPkgData = document.querySelector('input[name="selected_pkg"]:checked')?.value;
@@ -290,6 +316,9 @@
             document.getElementById("sum-game").innerText = currentGameName;
             document.getElementById("sum-pkg").innerText = parts[0];
             document.getElementById("sum-price").innerText = parts[1];
+            
+            // প্লেয়ার নাম প্লেয়ার আইডির উপরে দেখানো হচ্ছে
+            document.getElementById("sum-name").innerText = fetchedPlayerName;
             document.getElementById("sum-uid").innerText = currentUIDData;
 
             document.getElementById("payment-modal").style.display = "flex";
@@ -343,7 +372,7 @@
             }, 2000);
         }
 
-        // ২. পেমেন্ট ভেরিফাই ও টেলিগ্রাম বটে অর্ডার পাঠানো
+        // ২. পেমেন্ট ভেরিফাই ও টেলিগ্রাম বটে মেসেজ পাঠানো
         async function handlePaymentAndOrder(e) {
             e.preventDefault();
 
@@ -377,11 +406,12 @@
 
                     let orderID = "ORD" + Math.floor(100000 + Math.random() * 900000);
 
-                    // 📩 টেলিগ্রাম বটে বিস্তারিত মেসেজ ফরম্যাট (Re-order & Refund ডাটা সহ)
+                    // 📩 টেলিগ্রাম বটে বিস্তারিত মেসেজ ফরম্যাট
                     let textMessage = `📩 *NEW ORDER CREATED*\n` +
                                       `🆔 *Order ID:* \`${orderID}\`\n` +
                                       `🎮 *Game:* ${currentGameName}\n` +
                                       `💎 *Package:* ${selectedPkgData}\n` +
+                                      `👤 *Player Name:* ${fetchedPlayerName}\n` +
                                       `🆔 *Player ID:* \`${currentUIDData}\`\n` +
                                       `💳 *Payment Method:* ${payMethod}\n` +
                                       `📲 *Sent Money To:* ${sentNum}\n` +
@@ -391,6 +421,7 @@
                                       `🔄 *Re-order & Refund Info:*\n` +
                                       `• Game: ${currentGameName}\n` +
                                       `• Package: ${selectedPkgData}\n` +
+                                      `• Player Name: ${fetchedPlayerName}\n` +
                                       `• Target ID: \`${currentUIDData}\``;
 
                     const tgRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -406,7 +437,7 @@
                     const tgData = await tgRes.json();
 
                     if (tgData.ok) {
-                        alert("🎉 পেমেন্ট সফল হয়েছে এবং অর্ডার বানিয়ে দেওয়া হয়েছে!");
+                        alert("🎉 পেমেন্ট সফল হয়েছে এবং অর্ডার পাঠিয়ে দেওয়া হয়েছে!");
                         goHome();
                     } else {
                         alert("❌ অর্ডার টেলিগ্রামে পাঠাতে সমস্যা হয়েছে।");
