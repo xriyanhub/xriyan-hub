@@ -3,227 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Top Up - XRIYAN HUB</title>
-
+    <title>XRIYAN HUB - Free Fire Topup</title>
+    
     <script>
         // ====================================================================================================
-        // ⚡ RR TOPUP EXACT SERIAL + YOUR DISCOUNT RULES
+        // ⚡ RR TOPUP EXACT SERIAL & DISCOUNT PRICES (N1, P1 FORMAT)
         // ====================================================================================================
         
-        // --- 1. Top Memberships ---
-        const N1="Weekly";              const P1=156; // (158 - 2)
-        const N2="Monthly";             const P2=785; // (790 - 5)
+        // --- Memberships ---
+        const N1="Weekly";              const P1=156;
+        const N2="Monthly";             const P2=785;
 
-        // --- 2. Diamonds (RR TOPUP Serial) ---
-        const N3="25 Diamonds";         const P3=21;  // (22 - 1)
-        const N4="50 Diamonds";         const P4=35;  // (36 - 1)
-        const N5="100 Diamonds";        const P5=69;  // (70 - 1)
-        const N6="115 Diamonds";        const P6=78;  // (79 - 1)
-        const N7="240 Diamonds";        const P7=156; // (158 - 2)
-        const N8="300 Diamonds";        const P8=0;   // Stock Out / Upcoming (0 দিলে 'Soon' দেখাবে)
-        const N9="355 Diamonds";        const P9=232; // (237 - 5)
-        const N10="480 Diamonds";       const P10=311; // (316 - 5)
-        const N11="505 Diamonds";       const P11=331; // (336 - 5)
-        const N12="610 Diamonds";       const P12=395; // (400 - 5)
-        const N13="850 Diamonds";       const P13=553; // (558 - 5)
-        const N14="1090 Diamonds";      const P14=711; // (716 - 5)
-        const N15="1240 Diamonds";      const P15=795; // (800 - 5)
-        const N16="1720 Diamonds";      const P16=1111; // (1116 - 5)
-        const N17="2090 Diamonds";      const P17=1353; // (1358 - 5)
-        const N18="2530 Diamonds";      const P18=1605; // (1610 - 5)
-        const N19="4010 Diamonds";      const P19=2563; // (2568 - 5)
-        const N20="5060 Diamonds";      const P20=3215; // (3220 - 5)
-        const N21="10120 Diamonds";     const P21=6435; // (6440 - 5)
+        // --- Diamonds Serial ---
+        const N3="25 Diamonds";         const P3=21;
+        const N4="50 Diamonds";         const P4=35;
+        const N5="100 Diamonds";        const P5=69;
+        const N6="115 Diamonds";        const P6=78;
+        const N7="240 Diamonds";        const P7=156;
+        const N8="300 Diamonds";        const P8=0;   // Stock Out / Coming Soon
+        const N9="355 Diamonds";        const P9=232;
+        const N10="480 Diamonds";       const P10=311;
+        const N11="505 Diamonds";       const P11=331;
+        const N12="610 Diamonds";       const P12=395;
+        const N13="850 Diamonds";       const P13=553;
+        const N14="1090 Diamonds";      const P14=711;
+        const N15="1240 Diamonds";      const P15=795;
+        const N16="1720 Diamonds";      const P16=1111;
+        const N17="2090 Diamonds";      const P17=1353;
+        const N18="2530 Diamonds";      const P18=1605;
+        const N19="4010 Diamonds";      const P19=2563;
+        const N20="5060 Diamonds";      const P20=3215;
+        const N21="10120 Diamonds";     const P21=6435;
 
-        // --- 3. Combo Memberships ---
-        const N22="2x Weekly";          const P22=311; // (316 - 5)
-        const N23="3x Weekly";          const P23=469; // (474 - 5)
-        const N24="5x Weekly";          const P24=785; // (790 - 5)
-        const N25="2x Monthly";         const P25=1595; // (1600 - 5)
+        // --- Combo Memberships ---
+        const N22="2x Weekly";          const P22=311;
+        const N23="3x Weekly";          const P23=469;
+        const N24="5x Weekly";          const P24=785;
+        const N25="2x Monthly";         const P25=1595;
 
-        // ========================================================
-        // ⏳ VAULT / UPCOMING PACKS (চালু করতে সামনের // কেটে দাও)
-        // ========================================================
-        // const N26="Level Up Pass";   const P26=190;
-        // const N27="Evo Pass";        const P27=280;
-        // const N28="AirDrop TopUp";   const P28=0;
-        // const N29="Upcoming Offer 1";const P29=0;
-        // const N30="Upcoming Offer 2";const P30=0;
-        // const N31="Upcoming Offer 3";const P31=0;
-        // const N32="Upcoming Offer 4";const P32=0;
-        // const N33="Upcoming Offer 5";const P33=0;
-        // const N34="Upcoming Offer 6";const P34=0;
-        // const N35="Upcoming Offer 7";const P35=0;
+        // --- Upcoming / Extra Slots ---
+        const N26="Level Up Pass";      const P26=0;
+        const N27="Evo Pass";           const P27=0;
+        const N28="AirDrop TopUp";      const P28=0;
+        const N29="Upcoming Offer 1";   const P29=0;
+        const N30="Upcoming Offer 2";   const P30=0;
     </script>
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0f172a; color: #ffffff; padding-bottom: 50px; }
-        header { background: #1e293b; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #38bdf8; }
-        .back-btn { color: #38bdf8; text-decoration: none; font-weight: bold; }
-        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-        .banner { width: 100%; height: 120px; background: linear-gradient(135deg, #ff416c, #ff4b2b); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; }
-        .section-title { font-size: 16px; margin-bottom: 12px; color: #38bdf8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background-color: #0d1527; color: #ffffff; padding-bottom: 90px; }
         
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
-        .card { background: #1e293b; border: 2px solid #334155; border-radius: 10px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .card:hover, .card.active { border-color: #38bdf8; background: #0f2942; }
-        .card.disabled { opacity: 0.5; cursor: not-allowed; }
-        .card h4 { font-size: 15px; margin-bottom: 5px; color: #fff; }
-        .card p { font-size: 14px; color: #38bdf8; font-weight: bold; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #131e32; border-bottom: 2px solid #00a2ff; }
+        .logo { font-size: 20px; font-weight: bold; color: #00a2ff; }
+        .btn-home { background: #00a2ff; color: #000; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 14px; }
 
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; color: #cbd5e1; }
-        .form-group input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #fff; font-size: 15px; outline: none; }
-        
-        /* Description Box */
-        .desc-box { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 15px; margin-bottom: 25px; font-size: 13px; color: #cbd5e1; line-height: 1.6; }
-        .desc-box h4 { color: #38bdf8; margin-bottom: 8px; font-size: 15px; }
-        .desc-box ul { padding-left: 18px; }
-        .desc-box li { margin-bottom: 6px; }
+        .container { max-width: 500px; margin: 20px auto; padding: 0 15px; }
 
-        .btn-submit { width: 100%; padding: 14px; background: #38bdf8; color: #0f172a; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        .btn-submit:disabled { background: #64748b; cursor: not-allowed; }
+        .box { background: #131e32; border: 1px solid #00a2ff; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
+        .box-title { color: #00a2ff; font-size: 18px; margin-bottom: 12px; font-weight: bold; }
+        .sub-title { font-size: 14px; color: #00a2ff; margin-bottom: 10px; font-weight: bold; }
+
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+        .card { background: #090e1a; border: 1px solid #1e2d4a; border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; }
+        .card.active { border-color: #00a2ff; background: #0b223d; }
+        .card.upcoming { opacity: 0.4; cursor: not-allowed; border-style: dashed; }
+        .card h4 { font-size: 14px; margin-bottom: 4px; color: #fff; }
+        .card p { font-size: 13px; font-weight: bold; color: #00a2ff; }
+
+        input { width: 100%; padding: 12px; background: #090e1a; border: 1px solid #1e2d4a; border-radius: 8px; color: #fff; outline: none; margin-bottom: 15px; }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-add { flex: 1; background: #f1b700; color: #000; font-weight: bold; padding: 12px; border: none; border-radius: 8px; cursor: pointer; }
+        .btn-pay { flex: 1; background: #00a2ff; color: #000; font-weight: bold; padding: 12px; border: none; border-radius: 8px; cursor: pointer; }
+
+        .desc-box { background: #090e1a; border: 1px solid #1e2d4a; border-radius: 8px; padding: 12px; font-size: 12px; color: #a0aec0; margin-top: 15px; line-height: 1.5; }
+        .desc-box h5 { color: #00a2ff; margin-bottom: 6px; font-size: 14px; }
+        .desc-box ul { padding-left: 15px; }
+
+        .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #090e1a; border-top: 1px solid #00a2ff; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .total-text { font-size: 12px; color: #a0aec0; }
+        .total-price { font-size: 18px; font-weight: bold; color: #00ff66; }
+        .btn-checkout { background: #00a2ff; color: #000; padding: 10px 20px; border-radius: 6px; font-weight: bold; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="back-btn">← Home</a>
-        <h1>Free Fire Top Up</h1>
-        <div></div>
+        <div class="logo">XRIYAN HUB</div>
+        <a href="index.html" class="btn-home">🏠 Home</a>
     </header>
 
     <div class="container">
-        <div class="banner">🔥 FREE FIRE 🔥</div>
+        <div class="box">
+            <div class="box-title">Free Fire Topup</div>
 
-        <h3 class="section-title">১. প্যাকেজ নির্বাচন করুন</h3>
-        <div class="grid" id="package-grid">
-            <script>
-                function renderCard(name, price) {
-                    if (typeof name !== 'undefined' && typeof price !== 'undefined') {
-                        if (price > 0) {
-                            document.write(`
-                                <div class="card" onclick="selectPackage(this, '${name}', '${price} BDT')">
-                                    <h4>${name}</h4>
-                                    <p>${price} BDT</p>
-                                </div>
-                            `);
-                        } else {
-                            document.write(`
-                                <div class="card disabled">
-                                    <h4>${name}</h4>
-                                    <p style="color: #ef4444;">Stock Out</p>
-                                </div>
-                            `);
-                        }
-                    }
-                }
+            <div class="sub-title">১. প্যাকেজ নির্বাচন করুন</div>
+            <div class="grid" id="pack-grid"></div>
 
-                // ৩৫টি স্লটের ডায়নামিক লুপ
-                for (let i = 1; i <= 35; i++) {
-                    let name = window['N' + i];
-                    let price = window['P' + i];
-                    if (typeof name !== 'undefined') {
-                        renderCard(name, price);
-                    }
-                }
-            </script>
+            <div class="sub-title">২. প্লেয়ার তথ্য দিন</div>
+            <label style="font-size: 12px; color: #a0aec0; display: block; margin-bottom: 5px;">Player ID (UID):</label>
+            <input type="number" id="uid" placeholder="Enter ID here">
+
+            <label style="font-size: 12px; color: #a0aec0; display: block; margin-bottom: 5px;">পেমেন্ট ইনফো & TrxID:</label>
+            <input type="text" id="pay-info" placeholder="Bkash/Nagad/Rocket TrxID">
+
+            <div class="btn-group">
+                <button class="btn-add" onclick="addToCart()">🛒 ADD OFFER</button>
+                <button class="btn-pay" onclick="directPay()">PAY NOW (পেমেন্ট করুন)</button>
+            </div>
+
+            <div class="desc-box">
+                <h5>Description & Rules:</h5>
+                <ul>
+                    <li>শুধুমাত্র বাংলাদেশ সার্ভার এর আইডিতে টপ আপ করতে পারবেন।</li>
+                    <li>Player ID Code ভুল দিয়ে Diamond না পেলে XRIYAN HUB কর্তৃপক্ষ দায়ী নয়।</li>
+                    <li>আইডি কোড দিয়ে অর্ডার করলে এবং কোনো কারণে ডায়মন্ড না গেলে চেক করার জন্য গেইম এর লগইন ইনফো দিতে হতে পারে।</li>
+                    <li>ডেলিভারি টাইম সাধারণত ১-২ মিনিট এর মধ্যেই হয়ে থাকে, ইভেন্ট থাকলে ২-৩ ঘণ্টা বা তার বেশি সময় লাগতে পারে।</li>
+                    <li>সার্ভারে সমস্যা থাকলে অথবা স্টক না থাকলে সর্বোচ্চ ২৪ ঘণ্টা পর্যন্ত লাগতে পারে।</li>
+                </ul>
+            </div>
         </div>
+    </div>
 
-        <h3 class="section-title">২. প্লেয়ার তথ্য দিন</h3>
-        <div class="form-group">
-            <label for="player-id">Player ID (UID):</label>
-            <input type="number" id="player-id" placeholder="Ex: 123456789">
+    <div class="bottom-bar">
+        <div>
+            <div class="total-text">Total Selected: <span id="cart-count">0 Order</span></div>
+            <div class="total-price" id="cart-total">0 BDT</div>
         </div>
-
-        <div class="form-group">
-            <label for="payment-info">পেমেন্ট নম্বর ও TrxID (বিকাশ/নগদ):</label>
-            <input type="text" id="payment-info" placeholder="Ex: 017... / TrxID: AB123456">
-        </div>
-
-        <!-- Description Box (RR TOPUP এর অরিজিনাল রুলস সহ) -->
-        <div class="desc-box">
-            <h4>Description & Rules</h4>
-            <ul>
-                <li>শুধুমাত্র বাংলাদেশ সার্ভার এর আইডিতে টপ আপ করতে পারবেন।</li>
-                <li>Player ID Code ভুল দিয়ে Diamond না পেলে XRIYAN HUB কর্তৃপক্ষ দায়ী নয়।</li>
-                <li>আইডি কোড দিয়ে অর্ডার করলে এবং কোনো কারণে ডায়মন্ড না গেলে চেক করার জন্য গেইম এর লগইন ইনফো আইডি পাসওয়ার্ড দিতে হবে।</li>
-                <li>ডেলিভারি টাইম সাধারণত ১-২ মিনিট এর মধ্যেই হয়ে থাকে, ইভেন্ট থাকলে ২-৩ ঘণ্টা বা তার ও বেশি সময় লাগতে পারে।</li>
-                <li>সার্ভারে সমস্যা থাকলে অথবা স্টক না থাকলে সর্বোচ্চ ২৪ ঘণ্টা পর্যন্ত লাগতে পারে। ২৪ ঘণ্টার মধ্যে রিফান্ড চাইলে ওয়ালেট এ রিফান্ড করে দেওয়া হবে।</li>
-            </ul>
-        </div>
-
-        <button class="btn-submit" id="submit-btn" onclick="sendOrder()">BUY NOW (অর্ডার করুন)</button>
+        <button class="btn-checkout" onclick="directPay()">CHECKOUT ➔</button>
     </div>
 
     <script>
-        let selectedPackage = "";
-        let selectedPrice = "";
+        let selected = null;
+        let cartTotal = 0;
+        let cartItems = 0;
 
-        const TELEGRAM_BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E";
-        const TELEGRAM_CHAT_ID = "7623733350";
+        const grid = document.getElementById('pack-grid');
 
-        function selectPackage(element, pack, price) {
-            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
-            element.classList.add('active');
-            selectedPackage = pack;
-            selectedPrice = price;
+        // N1, P1 ভ্যারিয়েবলগুলোর লুপ চালিয়ে কার্ড রেন্ডার করা
+        for (let i = 1; i <= 30; i++) {
+            let name = window['N' + i];
+            let price = window['P' + i];
+
+            if (typeof name !== 'undefined' && typeof price !== 'undefined') {
+                const div = document.createElement('div');
+                
+                if (price > 0) {
+                    div.className = 'card';
+                    div.innerHTML = `<h4>${name}</h4><p>${price} BDT</p>`;
+                    div.onclick = () => {
+                        document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+                        div.classList.add('active');
+                        selected = { n: name, p: price };
+                    };
+                } else {
+                    div.className = 'card upcoming';
+                    div.innerHTML = `<h4>${name}</h4><p style="color: #ff4d4d;">Stock Out</p>`;
+                }
+                grid.appendChild(div);
+            }
         }
 
-        function sendOrder() {
-            const playerId = document.getElementById('player-id').value.trim();
-            const paymentInfo = document.getElementById('payment-info').value.trim();
+        function addToCart() {
+            if(!selected) return alert("দয়া করে একটি প্যাকেজ নির্বাচন করুন!");
+            cartTotal += selected.p;
+            cartItems += 1;
+            
+            document.getElementById('cart-count').innerText = cartItems + " Order";
+            document.getElementById('cart-total').innerText = cartTotal + " BDT";
+            alert(`${selected.n} কার্ডে যুক্ত করা হয়েছে!`);
+        }
 
-            if (!selectedPackage) {
-                alert("দয়া করে একটি প্যাকেজ সিলেক্ট করুন!");
-                return;
-            }
-            if (!playerId) {
-                alert("দয়া করে আপনার Player ID দিন!");
-                return;
-            }
-            if (!paymentInfo) {
-                alert("দয়া করে পেমেন্ট নম্বর ও TrxID দিন!");
-                return;
-            }
+        async function directPay() {
+            const uid = document.getElementById('uid').value;
+            const payInfo = document.getElementById('pay-info').value;
 
-            const btn = document.getElementById('submit-btn');
-            btn.innerText = "অর্ডার প্রসেস হচ্ছে...";
-            btn.disabled = true;
+            if(!selected && cartTotal === 0) return alert("প্যাকেজ নির্বাচন করুন!");
+            if(!uid) return alert("Player ID (UID) দিন!");
 
-            const message = `🛒 *New Order Received!*%0A%0A` +
-                `🎮 *Game:* Free Fire%0A` +
-                `💎 *Package:* ${selectedPackage}%0A` +
-                `💰 *Price:* ${selectedPrice}%0A` +
-                `🆔 *Player ID:* \`${playerId}\`%0A` +
-                `💳 *Payment:* \`${paymentInfo}\``;
+            const priceToSend = cartTotal > 0 ? cartTotal : selected.p;
+            const itemToSend = cartTotal > 0 ? `${cartItems} Items Combo` : selected.n;
 
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${message}&parse_mode=Markdown`;
+            const msg = `🚀 *New Order (XRIYAN HUB)*%0A%0A💎 *Package:* ${itemToSend}%0A💰 *Price:* ${priceToSend} BDT%0A🆔 *UID:* \`${uid}\`%0A💳 *Payment Info:* \`${payInfo}\``;
 
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        alert("🎉 আপনার অর্ডারটি সফলভাবে জমা হয়েছে!");
-                        document.getElementById('player-id').value = '';
-                        document.getElementById('payment-info').value = '';
-                        document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
-                        selectedPackage = "";
-                        selectedPrice = "";
-                    } else {
-                        alert("অর্ডার পাঠাতে সমস্যা হয়েছে। দয়া করে আবার চেষ্টা করুন।");
-                    }
-                })
-                .catch(err => {
-                    alert("নেটওয়ার্ক সমস্যা! আবার চেষ্টা করুন।");
-                })
-                .finally(() => {
-                    btn.innerText = "BUY NOW (অর্ডার করুন)";
-                    btn.disabled = false;
-                });
+            await fetch(`https://api.telegram.org/bot8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E/sendMessage?chat_id=7623733350&text=${msg}&parse_mode=Markdown`);
+
+            alert("🎉 আপনার অর্ডারটি সফলভাবে পাঠানো হয়েছে!");
+            location.reload();
         }
     </script>
-
 </body>
-</html>
+    </html>
+    
