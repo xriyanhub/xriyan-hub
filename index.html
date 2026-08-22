@@ -10,7 +10,7 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
-        body { background-color: #0f172a; color: #ffffff; padding-bottom: 90px; } /* Bottom space for floating bar */
+        body { background: #0f172a; color: #ffffff; padding-bottom: 90px; } /* Bottom space for floating bar */
 
         header { background: #1e293b; padding: 15px; text-align: center; border-bottom: 2px solid #38bdf8; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
         header h1 { font-size: 20px; color: #38bdf8; }
@@ -26,10 +26,10 @@
         .game-card h3 { font-size: 16px; color: #fff; font-weight: 700; }
 
         /* Offer Page Area */
-        #offer-page { display: none; background: #1e293b; border: 1px solid #38bdf8; border-radius: 16px; padding: 20px; margin-top: 10px; }
+        #offer-page { display: none; background: #1e293b; border: 1px solid #38bdf8; border-radius: 16px; padding: 20px; }
         .sec-title { color: #38bdf8; font-size: 15px; margin: 15px 0 8px 0; font-weight: bold; }
 
-        .pkg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .pkg-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
         .pay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         .pkg-card, .pay-card { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 10px; text-align: center; cursor: pointer; }
 
@@ -41,9 +41,9 @@
         .num-item { background: #1e293b; padding: 8px; border-radius: 6px; margin-top: 6px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #334155; }
         input[type="radio"]:checked + .num-item { border-color: #eab308; background: #3f2e04; }
 
-        .btn-copy { background: #38bdf8; color: #0f172a; border: none; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
+        .btn-copy { background: #38bdf8; color: #0f172a; border: none; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
-        .form-label { display: block; font-size: 13px; color: #cbd5e1; margin: 12px 0 5px 0; }
+        .form-label { display: block; font-size: 13px; color: #cbd5e1; margin: 12px 0 3px 0; }
         .form-input { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; outline: none; }
         .form-input:focus { border-color: #38bdf8; }
 
@@ -56,7 +56,7 @@
         .unavailable-msg { color: #ef4444; font-size: 13px; font-weight: bold; margin-top: 5px; text-align: center; }
 
         /* Modal / Booking Modal Area */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center; padding: 15px; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center; padding: 15px; }
         .modal-content { background: #1e293b; border: 1px solid #38bdf8; border-radius: 16px; width: 100%; max-width: 480px; padding: 20px; max-height: 85vh; overflow-y: auto; }
         .order-summary { background: #0f172a; border-radius: 8px; padding: 12px; margin: 10px 0; border: 1px solid #334155; }
         .summary-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; color: #cbd5e1; }
@@ -67,12 +67,12 @@
         .cart-item-details { font-size: 13px; color: #cbd5e1; margin-top: 3px; display: flex; justify-content: space-between; }
         .btn-remove-item { position: absolute; right: 10px; top: 10px; color: #ef4444; cursor: pointer; font-size: 14px; }
 
-        /* 🔻 STICKY BOTTOM CART BAR (টেলিগ্রামের স্টাইলে একদম নিচে ভেসে থাকা বার) 🔻 */
+        /* 🔻 STICKY BOTTOM CART BAR (টেলিগ্রামের সেইম একদম নিচে লেগে থাকা বার) 🔻 */
         .sticky-cart-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 2px solid #38bdf8; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; z-index: 999; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5); }
         .cart-info { display: flex; flex-direction: column; }
         .cart-count-text { font-size: 12px; color: #94a3b8; }
         .cart-total-text { font-size: 18px; color: #22c55e; font-weight: bold; }
-        .btn-view-cart { background: #38bdf8; color: #0f172a; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .btn-view-cart { background: #38bdf8; color: #0f172a; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -83,14 +83,16 @@
     </header>
 
     <div class="container">
+        <!-- Home Page Game Grid -->
         <div id="home-page">
-            <h3 style="margin-bottom:15px; color:#cbd5e1; font-size: 15px;">Select Game to Topup</h3>
+            <h3 style="margin-bottom: 15px; color: #cbd5e1; font-size: 15px;">Select Game to Topup</h3>
             <div class="game-grid" id="game-list"></div>
         </div>
 
+        <!-- Offer Page Area -->
         <div id="offer-page">
-            <h2 id="selected-game-title" style="color:#38bdf8; font-size:20px;"></h2>
-            
+            <h2 id="selected-game-title" style="color: #38bdf8; font-size: 20px;"></h2>
+
             <form id="booking-form" onsubmit="handleFormSubmit(event)">
                 <h4 class="sec-title">১. প্যাকেজ নির্বাচন করুন</h4>
                 <div class="pkg-grid" id="pkg-list"></div>
@@ -121,16 +123,16 @@
     <!-- Payment Modal / Popup Screen -->
     <div id="payment-modal" class="modal-overlay">
         <div class="modal-content">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <h3 style="color:#38bdf8;">অর্ডার বুকিং ও পেমেন্ট</h3>
-                <span onclick="closePaymentModal()" style="cursor:pointer; font-size:20px; color:#ef4444;">&times;</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="color: #38bdf8;">অর্ডার বুকিং ও পেমেন্ট</h3>
+                <span onclick="closePaymentModal()" style="cursor: pointer; font-size: 20px; color: #ef4444;">&times;</span>
             </div>
 
             <!-- List of Order Summary / Cart Items -->
             <div id="order-summary-container"></div>
 
             <form id="order-form" onsubmit="handlePaymentAndOrder(event)">
-                <h4 class="sec-title" style="margin-top:5px;">পেমেন্ট মেথড সিলেক্ট করুন</h4>
+                <h4 class="sec-title" style="margin-top: 5px;">পেমেন্ট মেথড সিলেক্ট করুন</h4>
                 <div class="pay-grid">
                     <label>
                         <input type="radio" name="pay_method" value="bKash" onclick="showNumbers('bKash')" required>
@@ -147,14 +149,14 @@
                 </div>
 
                 <div id="number-box" class="num-box">
-                    <p id="num-box-header" style="font-size: 12px; color: #eab308; font-weight: bold;">টাকা পাঠিয়ে নম্বরটি সিলেক্ট করুন:</p>
+                    <p id="num-box-header" style="font-size: 12px; color: #eab308; font-weight: bold;">টাকা পাঠানোর নম্বরটি সিলেক্ট করুন:</p>
                     <div id="num-list"></div>
                 </div>
 
                 <label class="form-label">Transaction ID (TrxID):</label>
                 <input type="text" id="trx-id" class="form-input" placeholder="Ex: 8N7A6D5E" required>
 
-                <button type="submit" id="sub-btn" class="btn-submit" style="width:100%; margin-top:15px; padding:12px;">CONFIRM & BUY NOW</button>
+                <button type="submit" id="sub-btn" class="btn-submit" style="width: 100%; margin-top: 15px; padding: 12px;">CONFIRM & BUY NOW</button>
             </form>
         </div>
     </div>
@@ -166,56 +168,56 @@
         }
 
         // ============================================
-        // 💳 পেমেন্ট নম্বর কনফিগারেশন
+        // 💳 পেমেন্ট নম্বর কনফিগারেশন (নাম্বার ও টাইপ সহ)
         // ============================================
         const paymentNumbers = {
             bKash: [
-                // "01700000001",
-                // "01700000002",
-                // "01700000003",
-                // "01700000004",
-                // "01700000005",
-                // "01700000006",
-                // "01700000007",
-                // "01700000008",
-                // "01700000009",
-                // "01700000010"
+                { num: "01700000001", type: "Send Money" },
+                // { num: "01700000002", type: "Send Money" },
+                // { num: "01700000003", type: "Send Money" },
+                // { num: "01700000004", type: "Send Money" },
+                // { num: "01700000005", type: "Send Money" },
+                // { num: "01700000006", type: "Send Money" },
+                // { num: "01700000007", type: "Send Money" },
+                // { num: "01700000008", type: "Send Money" },
+                // { num: "01700000009", type: "Send Money" },
+                // { num: "01700000010", type: "Send Money" }
             ],
             Nagad: [
-                "01804334909",
-                // "01800000001",
-                // "01800000002",
-                // "01800000003",
-                // "01800000004",
-                // "01800000005",
-                // "01800000006",
-                // "01800000007",
-                // "01800000008",
-                // "01800000009",
-                // "01800000010"
+                { num: "01804334909", type: "Send Money" },
+                // { num: "01800000001", type: "Cash Out" },
+                // { num: "01800000002", type: "Payment" },
+                // { num: "01800000003", type: "Send Money" },
+                // { num: "01800000004", type: "Send Money" },
+                // { num: "01800000005", type: "Send Money" },
+                // { num: "01800000006", type: "Send Money" },
+                // { num: "01800000007", type: "Send Money" },
+                // { num: "01800000008", type: "Send Money" },
+                // { num: "01800000009", type: "Send Money" },
+                // { num: "01800000010", type: "Send Money" }
             ],
             Rocket: [
-                // "01900000001",
-                // "01900000002",
-                // "01900000003",
-                // "01900000004",
-                // "01900000005",
-                // "01900000006",
-                // "01900000007",
-                // "01900000008",
-                // "01900000009",
-                // "01900000010"
+                { num: "01900000001", type: "Cash Out" },
+                // { num: "01900000002", type: "Send Money" },
+                // { num: "01900000003", type: "Send Money" },
+                // { num: "01900000004", type: "Send Money" },
+                // { num: "01900000005", type: "Send Money" },
+                // { num: "01900000006", type: "Send Money" },
+                // { num: "01900000007", type: "Send Money" },
+                // { num: "01900000008", type: "Send Money" },
+                // { num: "01900000009", type: "Send Money" },
+                // { num: "01900000010", type: "Send Money" }
             ]
         };
 
-        const UDDOKTAPAY_BASE_URL = "https://xriyanhub.paymently.io/api";
-        const UDDOKTAPAY_API_KEY = "T7a6KxQrlSqb1fELUInIK3vjZpcF6wy";
+        const UDNOKTAPAY_BASE_URL = "https://xriyanhub.paymently.io/api";
+        const UDNOKTAPAY_API_KEY = "T7a6KeQrLSqb1fELUInik3vjZpcF6wy";
         const BOT_TOKEN = "8580912664:AAG5VXydXN6ecTdEsJ9YgFoMIawdmZnoz9E";
         const CHAT_ID = "7623733350";
 
         const gamesData = {
-            1: { name: "Free Fire", icon: "fa-fire-flame-curved", uidText: "Player ID (UID):", pkgs: ["115 Diamonds - 80 BDT", "240 Diamonds - 160 BDT", "610 Diamonds - 420 BDT"] },
-            2: { name: "PUBG Mobile", icon: "fa-crosshairs", uidText: "Character ID (UID):", pkgs: ["60 UC - 95 BDT", "325 UC - 440 BDT", "660 UC - 860 BDT"] },
+            1: { name: "Free Fire", icon: "fa-fire-flame-curved", uidText: "Player ID (UID):", pkgs: ["115 Diamonds - 80 BDT", "610 Diamonds - 420 BDT"] },
+            2: { name: "PUBG Mobile", icon: "fa-crosshairs", uidText: "Character ID (UID):", pkgs: ["60 UC - 95 BDT", "325 UC - 440 BDT"] },
             3: { name: "Mobile Legends", icon: "fa-shield-halved", uidText: "User ID & Zone ID:", pkgs: ["86 Diamonds - 130 BDT", "172 Diamonds - 250 BDT"] },
             4: { name: "Brawl Stars", icon: "fa-star", uidText: "Player Tag (#):", pkgs: ["30 Gems - 170 BDT", "80 Gems - 410 BDT"] },
             5: { name: "Clash of Clans", icon: "fa-chess-knight", uidText: "Player Tag (#):", pkgs: ["80 Gems - 90 BDT", "500 Gems - 450 BDT"] },
@@ -223,7 +225,7 @@
             7: { name: "Call of Duty", icon: "fa-gun", uidText: "Player UID:", pkgs: ["80 CP - 110 BDT", "420 CP - 480 BDT"] },
             8: { name: "Counter Strike 2", icon: "fa-bullseye", uidText: "Steam Trade Link / ID:", pkgs: ["$5 Steam Wallet - 620 BDT"] },
             9: { name: "eFootball", icon: "fa-futbol", uidText: "Konami ID / User ID:", pkgs: ["130 Coins - 140 BDT", "520 Coins - 520 BDT"] },
-            10: { name: "GTA V Online", icon: "fa-car-burst", uidText: "Rockstar / Steam Email:", pkgs: ["Great White Shark - $1.5M - 450 BDT"] },
+            10: { name: "GTA V Online", icon: "fa-car-burst", uidText: "Rockstar / Steam Email:", pkgs: ["Great White Shark - 450 BDT"] },
             11: { name: "Honor of Kings", icon: "fa-crown", uidText: "Player UID:", pkgs: ["80 Tokens - 110 BDT", "240 Tokens - 310 BDT"] },
             12: { name: "League of Legends", icon: "fa-gem", uidText: "Riot ID & Tag:", pkgs: ["575 RP - 520 BDT", "1380 RP - 1180 BDT"] },
             13: { name: "Valorant PC", icon: "fa-v", uidText: "Riot ID & Tag:", pkgs: ["475 VP - 490 BDT", "1000 VP - 950 BDT"] }
@@ -289,7 +291,7 @@
             updateStickyBar();
         });
 
-        // ➕ Add Offer Functionality
+        // 🛒 Add Offer Functionality
         function addOfferToCart() {
             let selectedPkg = document.querySelector('input[name="selected_pkg"]:checked')?.value;
             let uid = document.getElementById("player-uid").value.trim();
@@ -311,11 +313,11 @@
             });
 
             updateStickyBar();
-            alert(`✅ ${currentGameName} (${parts[0]}) অফারটি যুক্ত হয়েছে!`);
+            alert(`✅ ${currentGameName} (${parts[0]}) সফলভাবে যুক্ত হয়েছে!`);
             document.getElementById("player-uid").value = "";
         }
 
-        // 🔄 Update Bottom Sticky Bar UI
+        // 📊 Update Bottom Sticky Bar UI
         function updateStickyBar() {
             let totalVal = 0;
             cart.forEach(item => totalVal += item.price);
@@ -327,20 +329,20 @@
         function handleFormSubmit(e) {
             e.preventDefault();
             let uid = document.getElementById("player-uid").value.trim();
-            
+
             if (uid !== "") {
                 addOfferToCart();
             }
 
             if (cart.length === 0) {
-                alert("⚠️ অনুগ্রহ করে অন্তত একটি অফার বা আইডি যুক্ত করুন!");
+                alert("⚠️ অনুগ্রহ করে অন্তত একটি অফার বা প্যাকেজ যুক্ত করুন!");
                 return;
             }
 
             openPaymentModal();
         }
 
-        // ১. অর্ডার বুকিং মডাল ওপেন
+        // 📜 অর্ডার বুকিং মডাল ওপেন
         function openPaymentModal() {
             if (cart.length === 0) {
                 alert("⚠️ আপনার তালিকায় কোন অফার যুক্ত করা নেই!");
@@ -413,13 +415,13 @@
 
             numHeader.style.display = "block";
             let numHTML = "";
-            numbers.forEach((num, idx) => {
+            numbers.forEach((item, idx) => {
                 numHTML += `
                     <label>
-                        <input type="radio" name="selected_num" value="${num} (${method})" ${idx === 0 ? 'required' : ''}>
+                        <input type="radio" name="selected_num" value="${item.num} (${item.type})" ${idx === 0 ? 'required' : ''}>
                         <div class="num-item">
-                            <span><b>${num}</b> (${method})</span>
-                            <button type="button" class="btn-copy" onclick="copyNum('${num}', this)">Copy</button>
+                            <span><b>${item.num}</b> <small style="color:#eab308; margin-left:5px;">(${item.type})</small></span>
+                            <button type="button" class="btn-copy" onclick="copyNum('${item.num}', this)">Copy</button>
                         </div>
                     </label>
                 `;
@@ -439,7 +441,7 @@
             }, 2000);
         }
 
-        // 💳 ২. পেমেন্ট ভেরিফাই ও টেলিগ্রাম বটে অর্ডার পাঠানো
+        // 💸 ২. পেমেন্ট ভেরিফাই ও টেলিগ্রাম বট অর্ডার পাঠানো
         async function handlePaymentAndOrder(e) {
             e.preventDefault();
 
@@ -457,11 +459,11 @@
             btn.disabled = true;
 
             try {
-                const verifyResponse = await fetch(`${UDDOKTAPAY_BASE_URL}/verify-payment`, {
+                const verifyResponse = await fetch(`${UDNOKTAPAY_BASE_URL}/verify-payment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'RT-UDDOKTAPAY-API-KEY': UDDOKTAPAY_API_KEY
+                        'RT-UDDOKTAPAY-API-KEY': UDNOKTAPAY_API_KEY
                     },
                     body: JSON.stringify({ invoice_id: trx })
                 });
@@ -481,22 +483,22 @@
                         totalVal += item.price;
                         itemsDetail += `🎮 *Game:* ${item.game}\n` +
                                        `💎 *Package:* ${item.pkg} (${item.priceText})\n` +
-                                       `🎯 *Player ID:* \`${item.uid}\`\n---\n`;
+                                       `👤 *Player ID:* \`${item.uid}\` \n---\n`;
 
-                        reorderData += `[${item.game} | ${item.pkg} | ${item.uid}] `;
+                        reorderData += `${item.game} | ${item.pkg} | ${item.uid} ; `;
                     });
 
-                    let textMessage = `📩 *NEW ORDER CREATED*\n\n` +
-                                      `🆔 *Order ID:* \`${orderID}\`\n` +
-                                      `📦 *Total Items:* ${cart.length}\n\n` +
-                                      `${itemsDetail}\n` +
-                                      `💳 *Payment Method:* ${payMethod}\n` +
-                                      `📲 *Sent Money To:* ${sentNum}\n` +
-                                      `📝 *Verified TrxID:* \`${trx}\`\n` +
-                                      `💰 *Paid Amount:* ${verifyData.amount || totalVal} BDT\n` +
-                                      `⏳ *Status:* Pending (In Processing)\n\n` +
-                                      `🔄 *RE-ORDER & REFUND INFO:*\n` +
-                                      `\`${reorderData.trim()}\``;
+                    let textMessage = `🚨 *NEW ORDER CREATED* 🚨\n\n` +
+                                       `🆔 *Order ID:* \`${orderID}\` \n` +
+                                       `🛒 *Total Items:* ${cart.length}\n\n` +
+                                       `${itemsDetail}\n` +
+                                       `💳 *Payment Method:* ${payMethod}\n` +
+                                       `📞 *Sent Money To:* ${sentNum}\n` +
+                                       `🔍 *Verified TrxID:* \`${trx}\` \n` +
+                                       `💰 *Paid Amount:* ৳${verifyData.amount || totalVal} BDT\n` +
+                                       `⏳ *Status:* Pending (In Processing)\n\n` +
+                                       `⚡ *RE-ORDER & REFUND INFO:* \n` +
+                                       `\`${reorderData.trim()}\``;
 
                     const tgRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                         method: 'POST',
@@ -516,10 +518,10 @@
                         updateStickyBar();
                         goHome();
                     } else {
-                        alert("❌ অর্ডার টেলিগ্রামে পাঠাতে সমস্যা হয়েছে।");
+                        alert("❌ অর্ডার পাঠাতে সমস্যা হয়েছে!");
                     }
                 } else {
-                    alert("❌ সঠিক TrxID পাওয়া যায়নি বা পেমেন্ট এখনো সফল হয়নি! অনুগ্রহ করে সঠিক TrxID দিন।");
+                    alert("❌ সঠিক TrxID পাওয়া যায়নি বা পেমেন্ট এখনো সফল হয়নি। অনুগ্রহ করে সঠিক TrxID দিন।");
                 }
             } catch (err) {
                 console.error(err);
