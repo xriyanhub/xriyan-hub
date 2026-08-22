@@ -10,7 +10,7 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
-        body { background-color: #0f172a; color: #ffffff; padding-bottom: 30px; }
+        body { background-color: #0f172a; color: #ffffff; padding-bottom: 90px; } /* Bottom space for floating bar */
 
         header { background: #1e293b; padding: 15px; text-align: center; border-bottom: 2px solid #38bdf8; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
         header h1 { font-size: 20px; color: #38bdf8; }
@@ -57,7 +57,7 @@
 
         /* Modal / Booking Modal Area */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(4px); z-index: 1000; justify-content: center; align-items: center; padding: 15px; }
-        .modal-content { background: #1e293b; border: 1px solid #38bdf8; border-radius: 16px; width: 100%; max-width: 480px; padding: 20px; max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: #1e293b; border: 1px solid #38bdf8; border-radius: 16px; width: 100%; max-width: 480px; padding: 20px; max-height: 85vh; overflow-y: auto; }
         .order-summary { background: #0f172a; border-radius: 8px; padding: 12px; margin: 10px 0; border: 1px solid #334155; }
         .summary-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; color: #cbd5e1; }
         .summary-row span:last-child { color: #fff; font-weight: bold; }
@@ -66,6 +66,13 @@
         .cart-item-title { font-size: 14px; color: #38bdf8; font-weight: bold; }
         .cart-item-details { font-size: 13px; color: #cbd5e1; margin-top: 3px; display: flex; justify-content: space-between; }
         .btn-remove-item { position: absolute; right: 10px; top: 10px; color: #ef4444; cursor: pointer; font-size: 14px; }
+
+        /* 🔻 STICKY BOTTOM CART BAR (টেলিগ্রামের স্টাইলে একদম নিচে ভেসে থাকা বার) 🔻 */
+        .sticky-cart-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 2px solid #38bdf8; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; z-index: 999; box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.5); }
+        .cart-info { display: flex; flex-direction: column; }
+        .cart-count-text { font-size: 12px; color: #94a3b8; }
+        .cart-total-text { font-size: 18px; color: #22c55e; font-weight: bold; }
+        .btn-view-cart { background: #38bdf8; color: #0f172a; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
 <body>
@@ -94,10 +101,21 @@
 
                 <div class="btn-group">
                     <button type="button" class="btn-add-offer" onclick="addOfferToCart()"><i class="fa-solid fa-cart-plus"></i> ADD OFFER</button>
-                    <button type="submit" class="btn-submit">PROCEED TO PAYMENT (পেমেন্ট করুন)</button>
+                    <button type="submit" class="btn-submit">PAY NOW (পেমেন্ট করুন)</button>
                 </div>
             </form>
         </div>
+    </div>
+
+    <!-- 🔻 FLOATING STICKY BOTTOM BAR 🔻 -->
+    <div class="sticky-cart-bar" id="sticky-cart-bar">
+        <div class="cart-info">
+            <span class="cart-count-text">Total Selected: <b id="bar-items-count" style="color:#eab308;">0 Orders</b></span>
+            <span class="cart-total-text" id="bar-total-price">0 BDT</span>
+        </div>
+        <button class="btn-view-cart" onclick="openPaymentModal()">
+            <span>CHECKOUT</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
     </div>
 
     <!-- Payment Modal / Popup Screen -->
@@ -268,6 +286,7 @@
             if (savedGameId && gamesData[savedGameId]) {
                 openGameOffer(savedGameId);
             }
+            updateStickyBar();
         });
 
         // ➕ Add Offer Functionality
@@ -291,15 +310,24 @@
                 uid: uid
             });
 
-            alert(`✅ ${currentGameName} (${parts[0]}) অফারটি যুক্ত হয়েছে! (মোট: ${cart.length} টি)`);
+            updateStickyBar();
+            alert(`✅ ${currentGameName} (${parts[0]}) অফারটি যুক্ত হয়েছে!`);
             document.getElementById("player-uid").value = "";
+        }
+
+        // 🔄 Update Bottom Sticky Bar UI
+        function updateStickyBar() {
+            let totalVal = 0;
+            cart.forEach(item => totalVal += item.price);
+
+            document.getElementById("bar-items-count").innerText = `${cart.length} Order${cart.length > 1 ? 's' : ''}`;
+            document.getElementById("bar-total-price").innerText = `${totalVal} BDT`;
         }
 
         function handleFormSubmit(e) {
             e.preventDefault();
             let uid = document.getElementById("player-uid").value.trim();
             
-            // If user filled input but didn't click "Add Offer", add it automatically
             if (uid !== "") {
                 addOfferToCart();
             }
@@ -315,7 +343,7 @@
         // ১. অর্ডার বুকিং মডাল ওপেন
         function openPaymentModal() {
             if (cart.length === 0) {
-                alert("⚠️ আপনার তালিকায় কোন অফার নেই!");
+                alert("⚠️ আপনার তালিকায় কোন অফার যুক্ত করা নেই!");
                 return;
             }
 
@@ -355,6 +383,7 @@
 
         function removeOffer(index) {
             cart.splice(index, 1);
+            updateStickyBar();
             if (cart.length === 0) {
                 closePaymentModal();
             } else {
@@ -444,7 +473,6 @@
 
                     let orderID = "ORD" + Math.floor(100000 + Math.random() * 900000);
 
-                    // Multi-order & Re-order formatted text
                     let itemsDetail = "";
                     let reorderData = "";
                     let totalVal = 0;
@@ -458,7 +486,6 @@
                         reorderData += `[${item.game} | ${item.pkg} | ${item.uid}] `;
                     });
 
-                    // 📩 টেলিগ্রাম বটে বিস্তারিত মেসেজ ফরম্যাট (Re-order & Refund তথ্য সহ)
                     let textMessage = `📩 *NEW ORDER CREATED*\n\n` +
                                       `🆔 *Order ID:* \`${orderID}\`\n` +
                                       `📦 *Total Items:* ${cart.length}\n\n` +
@@ -484,8 +511,9 @@
                     const tgData = await tgRes.json();
 
                     if (tgData.ok) {
-                        alert("🎉 পেমেন্ট সফল হয়েছে এবং আপনার অর্ডার পাঠিয়ে দেওয়া হয়েছে!");
+                        alert("🎉 পেমেন্ট সফল হয়েছে এবং আপনার সকল অর্ডার পাঠিয়ে দেওয়া হয়েছে!");
                         cart = [];
+                        updateStickyBar();
                         goHome();
                     } else {
                         alert("❌ অর্ডার টেলিগ্রামে পাঠাতে সমস্যা হয়েছে।");
