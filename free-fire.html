@@ -6,48 +6,54 @@
     <title>Free Fire Top Up - XRIYAN HUB</title>
 
     <script>
-        // ========================================================
-        // ⚡ ACTIVE OFFERINGS (তোমার রুলস অনুযায়ী দাম বসানো হয়েছে)
-        // ========================================================
+        // ====================================================================================================
+        // ⚡ RR TOPUP EXACT SERIAL + YOUR DISCOUNT RULES
+        // ====================================================================================================
+        
+        // --- 1. Top Memberships ---
         const N1="Weekly";              const P1=156; // (158 - 2)
         const N2="Monthly";             const P2=785; // (790 - 5)
+
+        // --- 2. Diamonds (RR TOPUP Serial) ---
         const N3="25 Diamonds";         const P3=21;  // (22 - 1)
         const N4="50 Diamonds";         const P4=35;  // (36 - 1)
         const N5="100 Diamonds";        const P5=69;  // (70 - 1)
         const N6="115 Diamonds";        const P6=78;  // (79 - 1)
         const N7="240 Diamonds";        const P7=156; // (158 - 2)
-        const N8="355 Diamonds";        const P8=232; // (237 - 5)
-        const N9="480 Diamonds";        const P9=311; // (316 - 5)
-        const N10="505 Diamonds";       const P10=331; // (336 - 5)
-        const N11="610 Diamonds";       const P11=395; // (400 - 5)
-        const N12="850 Diamonds";       const P12=553; // (558 - 5)
-        const N13="1090 Diamonds";      const P13=711; // (716 - 5)
-        const N14="1240 Diamonds";      const P14=795; // (800 - 5)
-        const N15="1720 Diamonds";      const P15=1111; // (1116 - 5)
-        const N16="2090 Diamonds";      const P16=1353; // (1358 - 5)
-        const N17="2530 Diamonds";      const P17=1605; // (1610 - 5)
-        const N18="4010 Diamonds";      const P18=2563; // (2568 - 5)
-        const N19="5060 Diamonds";      const P19=3215; // (3220 - 5)
-        const N20="10120 Diamonds";     const P20=6435; // (6440 - 5)
-        const N21="2x Weekly";          const P21=311; // (316 - 5)
-        const N22="3x Weekly";          const P22=469; // (474 - 5)
-        const N23="5x Weekly";          const P23=785; // (790 - 5)
-        const N24="2x Monthly";         const P24=1595; // (1600 - 5)
+        const N8="300 Diamonds";        const P8=0;   // Stock Out / Upcoming (0 দিলে 'Soon' দেখাবে)
+        const N9="355 Diamonds";        const P9=232; // (237 - 5)
+        const N10="480 Diamonds";       const P10=311; // (316 - 5)
+        const N11="505 Diamonds";       const P11=331; // (336 - 5)
+        const N12="610 Diamonds";       const P12=395; // (400 - 5)
+        const N13="850 Diamonds";       const P13=553; // (558 - 5)
+        const N14="1090 Diamonds";      const P14=711; // (716 - 5)
+        const N15="1240 Diamonds";      const P15=795; // (800 - 5)
+        const N16="1720 Diamonds";      const P16=1111; // (1116 - 5)
+        const N17="2090 Diamonds";      const P17=1353; // (1358 - 5)
+        const N18="2530 Diamonds";      const P18=1605; // (1610 - 5)
+        const N19="4010 Diamonds";      const P19=2563; // (2568 - 5)
+        const N20="5060 Diamonds";      const P20=3215; // (3220 - 5)
+        const N21="10120 Diamonds";     const P21=6435; // (6440 - 5)
+
+        // --- 3. Combo Memberships ---
+        const N22="2x Weekly";          const P22=311; // (316 - 5)
+        const N23="3x Weekly";          const P23=469; // (474 - 5)
+        const N24="5x Weekly";          const P24=785; // (790 - 5)
+        const N25="2x Monthly";         const P25=1595; // (1600 - 5)
 
         // ========================================================
         // ⏳ VAULT / UPCOMING PACKS (চালু করতে সামনের // কেটে দাও)
         // ========================================================
-        // const N25="Level Up Pass";   const P25=190;
-        // const N26="Evo Pass";        const P26=280;
-        // const N27="AirDrop TopUp";   const P27=0;
-        // const N28="Upcoming Offer 1";const P28=0;
-        // const N29="Upcoming Offer 2";const P29=0;
-        // const N30="Upcoming Offer 3";const P30=0;
-        // const N31="Upcoming Offer 4";const P31=0;
-        // const N32="Upcoming Offer 5";const P32=0;
-        // const N33="Upcoming Offer 6";const P33=0;
-        // const N34="Upcoming Offer 7";const P34=0;
-        // const N35="Upcoming Offer 8";const P35=0;
+        // const N26="Level Up Pass";   const P26=190;
+        // const N27="Evo Pass";        const P27=280;
+        // const N28="AirDrop TopUp";   const P28=0;
+        // const N29="Upcoming Offer 1";const P29=0;
+        // const N30="Upcoming Offer 2";const P30=0;
+        // const N31="Upcoming Offer 3";const P31=0;
+        // const N32="Upcoming Offer 4";const P32=0;
+        // const N33="Upcoming Offer 5";const P33=0;
+        // const N34="Upcoming Offer 6";const P34=0;
+        // const N35="Upcoming Offer 7";const P35=0;
     </script>
 
     <style>
@@ -62,6 +68,7 @@
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 25px; }
         .card { background: #1e293b; border: 2px solid #334155; border-radius: 10px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
         .card:hover, .card.active { border-color: #38bdf8; background: #0f2942; }
+        .card.disabled { opacity: 0.5; cursor: not-allowed; }
         .card h4 { font-size: 15px; margin-bottom: 5px; color: #fff; }
         .card p { font-size: 14px; color: #38bdf8; font-weight: bold; }
 
@@ -95,16 +102,25 @@
             <script>
                 function renderCard(name, price) {
                     if (typeof name !== 'undefined' && typeof price !== 'undefined') {
-                        document.write(`
-                            <div class="card" onclick="selectPackage(this, '${name}', '${price} BDT')">
-                                <h4>${name}</h4>
-                                <p>${price > 0 ? price + ' BDT' : 'Soon'}</p>
-                            </div>
-                        `);
+                        if (price > 0) {
+                            document.write(`
+                                <div class="card" onclick="selectPackage(this, '${name}', '${price} BDT')">
+                                    <h4>${name}</h4>
+                                    <p>${price} BDT</p>
+                                </div>
+                            `);
+                        } else {
+                            document.write(`
+                                <div class="card disabled">
+                                    <h4>${name}</h4>
+                                    <p style="color: #ef4444;">Stock Out</p>
+                                </div>
+                            `);
+                        }
                     }
                 }
 
-                // ৩৫টি স্লট রাখা হয়েছে যাতে সহজেই নতুন প্যাক যোগ করা যায়
+                // ৩৫টি স্লটের ডায়নামিক লুপ
                 for (let i = 1; i <= 35; i++) {
                     let name = window['N' + i];
                     let price = window['P' + i];
@@ -126,15 +142,15 @@
             <input type="text" id="payment-info" placeholder="Ex: 017... / TrxID: AB123456">
         </div>
 
-        <!-- Description Box -->
+        <!-- Description Box (RR TOPUP এর অরিজিনাল রুলস সহ) -->
         <div class="desc-box">
             <h4>Description & Rules</h4>
             <ul>
                 <li>শুধুমাত্র বাংলাদেশ সার্ভার এর আইডিতে টপ আপ করতে পারবেন।</li>
                 <li>Player ID Code ভুল দিয়ে Diamond না পেলে XRIYAN HUB কর্তৃপক্ষ দায়ী নয়।</li>
-                <li>আইডি কোড দিয়ে অর্ডার করলে এবং কোনো কারণে ডায়মন্ড না গেলে চেক করার জন্য গেইম এর লগইন ইনফো দিতে হতে পারে।</li>
-                <li>ডেলিভারি টাইম সাধারণত ১-২ মিনিট এর মধ্যেই হয়ে থাকে, ইভেন্ট থাকলে ২-৩ ঘণ্টা বা তার বেশি সময় লাগতে পারে।</li>
-                <li>সার্ভারে সমস্যা থাকলে অথবা স্টক না থাকলে সর্বোচ্চ ২৪ ঘণ্টা পর্যন্ত লাগতে পারে।</li>
+                <li>আইডি কোড দিয়ে অর্ডার করলে এবং কোনো কারণে ডায়মন্ড না গেলে চেক করার জন্য গেইম এর লগইন ইনফো আইডি পাসওয়ার্ড দিতে হবে।</li>
+                <li>ডেলিভারি টাইম সাধারণত ১-২ মিনিট এর মধ্যেই হয়ে থাকে, ইভেন্ট থাকলে ২-৩ ঘণ্টা বা তার ও বেশি সময় লাগতে পারে।</li>
+                <li>সার্ভারে সমস্যা থাকলে অথবা স্টক না থাকলে সর্বোচ্চ ২৪ ঘণ্টা পর্যন্ত লাগতে পারে। ২৪ ঘণ্টার মধ্যে রিফান্ড চাইলে ওয়ালেট এ রিফান্ড করে দেওয়া হবে।</li>
             </ul>
         </div>
 
