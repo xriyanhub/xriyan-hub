@@ -172,7 +172,7 @@
         // ============================================
         const paymentNumbers = {
             bKash: [
-               // { num: "01700000001", type: "Send Money" },
+                // { num: "01700000001", type: "Send Money" },
                 // { num: "01700000002", type: "Send Money" },
                 // { num: "01700000003", type: "Send Money" },
                 // { num: "01700000004", type: "Send Money" },
@@ -189,15 +189,10 @@
                 // { num: "01800000002", type: "Payment" },
                 // { num: "01800000003", type: "Send Money" },
                 // { num: "01800000004", type: "Send Money" },
-                // { num: "01800000005", type: "Send Money" },
-                // { num: "01800000006", type: "Send Money" },
-                // { num: "01800000007", type: "Send Money" },
-                // { num: "01800000008", type: "Send Money" },
-                // { num: "01800000009", type: "Send Money" },
-                // { num: "01800000010", type: "Send Money" }
+                // { num: "01800000005", type: "Send Money" }
             ],
             Rocket: [
-              //  { num: "01900000001", type: "Cash Out" },
+                // { num: "01900000001", type: "Cash Out" },
                 // { num: "01900000002", type: "Send Money" },
                 // { num: "01900000003", type: "Send Money" },
                 // { num: "01900000004", type: "Send Money" },
@@ -232,7 +227,9 @@
         };
 
         let currentGameName = "";
-        let cart = []; // Store multiple offers
+        
+        // 🛒 LocalStorage থেকে সেভ করা কার্ট লোড করা (যাতে রিফ্রেশ করলেও কার্ট জিরো না হয়)
+        let cart = JSON.parse(localStorage.getItem("xriyan_cart")) || [];
 
         const gameListContainer = document.getElementById("game-list");
         Object.keys(gamesData).forEach(id => {
@@ -248,8 +245,6 @@
         function openGameOffer(id) {
             let g = gamesData[id];
             currentGameName = g.name;
-
-            localStorage.setItem("selected_game_id", id);
 
             document.getElementById("selected-game-title").innerText = g.name + " Topup";
             document.getElementById("uid-label").innerText = g.uidText;
@@ -275,7 +270,6 @@
         }
 
         function goHome() {
-            localStorage.removeItem("selected_game_id");
             document.getElementById("home-page").style.display = "block";
             document.getElementById("offer-page").style.display = "none";
             document.getElementById("btn-home").style.display = "none";
@@ -284,10 +278,9 @@
         }
 
         window.addEventListener("DOMContentLoaded", () => {
-            let savedGameId = localStorage.getItem("selected_game_id");
-            if (savedGameId && gamesData[savedGameId]) {
-                openGameOffer(savedGameId);
-            }
+            // ১. অ্যাপ ক্লোজ করে আবার ওপেন করলে সবসময় Home (১ম) পেজ থেকে শুরু হবে।
+            goHome();
+            // ২. রিফ্রেশ দিলেও কার্ট এর আইটেম বজায় রাখতে আপডেট ফাংশন কল করা
             updateStickyBar();
         });
 
@@ -311,6 +304,9 @@
                 price: priceNum,
                 uid: uid
             });
+
+            // LocalStorage-এ কার্ট সেভ করা
+            localStorage.setItem("xriyan_cart", JSON.stringify(cart));
 
             updateStickyBar();
             alert(`✅ ${currentGameName} (${parts[0]}) সফলভাবে যুক্ত হয়েছে!`);
@@ -385,6 +381,7 @@
 
         function removeOffer(index) {
             cart.splice(index, 1);
+            localStorage.setItem("xriyan_cart", JSON.stringify(cart)); // রিমুভ করার পর আপডেট কার্ট সেভ করা
             updateStickyBar();
             if (cart.length === 0) {
                 closePaymentModal();
@@ -515,6 +512,7 @@
                     if (tgData.ok) {
                         alert("🎉 পেমেন্ট সফল হয়েছে এবং আপনার সকল অর্ডার পাঠিয়ে দেওয়া হয়েছে!");
                         cart = [];
+                        localStorage.removeItem("xriyan_cart"); // পেমেন্ট শেষে কার্ট ক্লিয়ার করা
                         updateStickyBar();
                         goHome();
                     } else {
